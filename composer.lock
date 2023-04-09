@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f39e57a66b39f496171ca158674ae1ad",
+    "content-hash": "d53a6484cdb9e409380b1a39ba2fe2f3",
     "packages": [
         {
             "name": "amendozaaguiar/laraveles-spanish-for-jetstream",
@@ -75,61 +75,6 @@
             },
             "abandoned": "https://github.com/amendozaaguiar/laravel-lat-es",
             "time": "2022-09-13T03:11:12+00:00"
-        },
-        {
-            "name": "ascsoftw/livewire-toast",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ascsoftw/livewire-toast.git",
-                "reference": "8f88eb937e618ef8d34c89e9dbc19dfa6a2396af"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ascsoftw/livewire-toast/zipball/8f88eb937e618ef8d34c89e9dbc19dfa6a2396af",
-                "reference": "8f88eb937e618ef8d34c89e9dbc19dfa6a2396af",
-                "shasum": ""
-            },
-            "require-dev": {
-                "livewire/livewire": "^2.4",
-                "orchestra/testbench": "^6.17"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Ascsoftw\\LivewireToast\\LivewireToastServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ascsoftw\\LivewireToast\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "AscSoftwares",
-                    "email": "support@ascsoftwares.com"
-                }
-            ],
-            "description": "Livewire Package to display Toast Notifications",
-            "keywords": [
-                "LivewireToast",
-                "laravel",
-                "livewire",
-                "notifications",
-                "toast"
-            ],
-            "support": {
-                "issues": "https://github.com/ascsoftw/livewire-toast/issues",
-                "source": "https://github.com/ascsoftw/livewire-toast/tree/1.0.1"
-            },
-            "time": "2021-05-25T11:07:52+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",

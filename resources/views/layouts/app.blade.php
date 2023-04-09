@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" type="image/x-icon" href="/storage/img/logo.png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -34,12 +35,13 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="flex items-center justify-center p-6 overflow-y-hidden font-sans bg-gray-100 min-w-screen min-h-3/4">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
 
         @stack('modals')
-
         @livewireScripts
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

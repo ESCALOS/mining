@@ -13,7 +13,7 @@ class RedirectController extends Controller
         }else{
             $user = User::find(auth()->user()->id);
             if($user->hasRole('administrador')){
-                return redirect()->route('administrador.base');
+                return redirect()->route('administrador.concentrate');
             }else{
                 return view('dashboard');
             }
