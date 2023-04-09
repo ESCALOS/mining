@@ -4,8 +4,133 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9f42c96f29f2c5210478ae0625c9ea2",
+    "content-hash": "f39e57a66b39f496171ca158674ae1ad",
     "packages": [
+        {
+            "name": "amendozaaguiar/laraveles-spanish-for-jetstream",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amendozaaguiar/laraveles-spanish-for-jetstream.git",
+                "reference": "89be6c9c32919e53b26903090f27277b01f58f29"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amendozaaguiar/laraveles-spanish-for-jetstream/zipball/89be6c9c32919e53b26903090f27277b01f58f29",
+                "reference": "89be6c9c32919e53b26903090f27277b01f58f29",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": ">=5.4.0",
+                "illuminate/support": ">=5.4.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.4|^4.0",
+                "phpunit/phpunit": "^5.6|^6.3|^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laraveles\\Spanish\\SpanishServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laraveles\\Spanish\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anderson Mendoza"
+                },
+                {
+                    "name": "Israel Ortuño",
+                    "email": "ai.ortuno@gmail.com"
+                },
+                {
+                    "name": "Cesar Garcia",
+                    "email": "cesargb@gmail.com",
+                    "homepage": "https://github.com/cesargb",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Conjunto de traducciones en español para Laravel con Jetstream",
+            "homepage": "https://github.com/amendozaaguiar/laraveles-spanish-for-jetstream",
+            "keywords": [
+                "jetstream",
+                "laravel",
+                "laraveles",
+                "spanish",
+                "traduccion"
+            ],
+            "support": {
+                "source": "https://github.com/amendozaaguiar/laraveles-spanish-for-jetstream/tree/1.7.0"
+            },
+            "abandoned": "https://github.com/amendozaaguiar/laravel-lat-es",
+            "time": "2022-09-13T03:11:12+00:00"
+        },
+        {
+            "name": "ascsoftw/livewire-toast",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ascsoftw/livewire-toast.git",
+                "reference": "8f88eb937e618ef8d34c89e9dbc19dfa6a2396af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ascsoftw/livewire-toast/zipball/8f88eb937e618ef8d34c89e9dbc19dfa6a2396af",
+                "reference": "8f88eb937e618ef8d34c89e9dbc19dfa6a2396af",
+                "shasum": ""
+            },
+            "require-dev": {
+                "livewire/livewire": "^2.4",
+                "orchestra/testbench": "^6.17"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ascsoftw\\LivewireToast\\LivewireToastServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ascsoftw\\LivewireToast\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "AscSoftwares",
+                    "email": "support@ascsoftwares.com"
+                }
+            ],
+            "description": "Livewire Package to display Toast Notifications",
+            "keywords": [
+                "LivewireToast",
+                "laravel",
+                "livewire",
+                "notifications",
+                "toast"
+            ],
+            "support": {
+                "issues": "https://github.com/ascsoftw/livewire-toast/issues",
+                "source": "https://github.com/ascsoftw/livewire-toast/tree/1.0.1"
+            },
+            "time": "2021-05-25T11:07:52+00:00"
+        },
         {
             "name": "bacon/bacon-qr-code",
             "version": "2.0.8",
@@ -1084,6 +1209,74 @@
                 }
             ],
             "time": "2021-10-07T12:57:01+00:00"
+        },
+        {
+            "name": "jantinnerezo/livewire-alert",
+            "version": "2.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jantinnerezo/livewire-alert.git",
+                "reference": "a017d3f41024ca3a589a6b0db5d0af3efe532fa9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jantinnerezo/livewire-alert/zipball/a017d3f41024ca3a589a6b0db5d0af3efe532fa9",
+                "reference": "a017d3f41024ca3a589a6b0db5d0af3efe532fa9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.5 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "livewire/livewire": "^2.0",
+                "php": "^7.4|^8.0|^8.1|^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.15|^7.0|^8.0",
+                "phpunit/phpunit": "^9.5|^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Jantinnerezo\\LivewireAlert\\LivewireAlertServiceProvider"
+                    ],
+                    "aliases": {
+                        "LivewireAlert": "Jantinnerezo\\LivewireAlert\\LivewireAlertFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jantinnerezo\\LivewireAlert\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jantinn Erezo",
+                    "email": "erezojantinn@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package provides a simple alert utilities for your livewire components.",
+            "homepage": "https://github.com/jantinnerezo/livewire-alert",
+            "keywords": [
+                "jantinnerezo",
+                "livewire-alert"
+            ],
+            "support": {
+                "issues": "https://github.com/jantinnerezo/livewire-alert/issues",
+                "source": "https://github.com/jantinnerezo/livewire-alert/tree/2.2.7"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/jantinn",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-02-15T18:05:31+00:00"
         },
         {
             "name": "jaybizzle/crawler-detect",
