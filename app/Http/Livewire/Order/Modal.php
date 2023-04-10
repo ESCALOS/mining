@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Carbon\Carbon;
 
 class Modal extends Component
 {
@@ -94,7 +95,7 @@ class Modal extends Component
         $this->deliveryNote = "";
         $this->weighingScaleDocumentNumber = "";
         $this->weighingScaleName = "";
-        $this->settled = true;
+        $this->settled = false;
     }
 
     public function abrirModal($id){
@@ -248,11 +249,19 @@ class Modal extends Component
         $entity->save();
         if($this->orderId > 0){
             $order = Order::find($this->orderId);
+            if($order->settled){
+                $this->alert('error', '¡No se puede editar!', [
+                    'position' => 'center',
+                    'timer' => 2000,
+                    'toast' => false,
+                   ]);
+                return false;
+            }
         }else{
             $order = new Order();
         }
         $order->ticket = strtoupper($this->ticket);
-        $order->batch = "2304-0001";
+        $order->batch = $this->createCorrelative();
         $order->client_id = Entity::where('document_number',$this->clientDocumentNumber)->first()->id;
         $order->concentrate_id = $this->concentrateId;
         $order->wmt = $this->wmt;
@@ -264,7 +273,7 @@ class Modal extends Component
         $order->weighing_scale_company_id = Entity::where('document_number',$this->weighingScaleDocumentNumber)->first()->id;
         $order->user_id = Auth::user()->id;
         $order->save();
-        $this->alert('success', '¡Concentrado guardado!', [
+        $this->alert('success', '¡Orden guardada!', [
             'position' => 'top-right',
             'timer' => 2000,
             'toast' => true,
@@ -274,6 +283,17 @@ class Modal extends Component
             $this->open = false;
         }
         $this->resetExcept('open','concentrates');
+    }
+
+    public function createCorrelative(){
+        $fecha = Carbon::now()->isoFormat('YYMM');
+        $last_batch = explode("-",Order::latest()->first()->batch);
+        if($fecha != $last_batch[0]){
+            $correlativo = '0001';
+        }else{
+            $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
+        }
+        return $fecha.'-'.$correlativo;
     }
 
     public function checkDocumentNumber($numero){

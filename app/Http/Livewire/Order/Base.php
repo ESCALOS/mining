@@ -16,7 +16,7 @@ class Base extends Component
     public $search;
     public $boton_activo;
 
-    protected $listeners = ['render'];
+    protected $listeners = ['render','anuladoConfirmado','confirmSettle'];
 
     public function mount(){
         $this->search = "";
@@ -29,8 +29,8 @@ class Base extends Component
     }
 
     public function anular(){
-        if(Order::has('orders')->where('id',$this->orderId)->exists()){
-            $this->alert('warning', '¡No se puede eliminar el concentrado!', [
+        if(Order::find($this->orderId)->settled){
+            $this->alert('warning', '¡No se puede eliminar la orden!', [
                 'position' => 'top-right',
                 'timer' => 2000,
                 'toast' => true,
@@ -50,6 +50,30 @@ class Base extends Component
 
         }
     }
+
+    public function settle(){
+        if(Order::find($this->orderId)->settled){
+            $this->alert('warning', '¡Orden ya liquidada!', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        }else{
+            $this->alert('question','¿Estas seguro de liquidar?',[
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Sí',
+                'onConfirmed' => 'confirmed',
+                'position' => 'center',
+                'toast' => false,
+                'showCancelButton' => true,
+                'cancelButtonText' => 'No',
+                'timer' => 10000,
+                'onConfirmed' => 'confirmSettle',
+            ]);
+
+        }
+    }
+
     public function anuladoConfirmado() {
         Order::find($this->orderId)->delete();
         $this->orderId = 0;
@@ -61,9 +85,26 @@ class Base extends Component
         $this->render();
     }
 
+    public function confirmSettle() {
+        $order = Order::find($this->orderId);
+        $order->settled = true;
+        $order->save();
+        $this->orderId = 0;
+        $this->alert('success', '¡Concentrado Eliminado!', [
+            'position' => 'top-right',
+            'timer' => 2000,
+            'toast' => true,
+        ]);
+        $this->render();
+    }
+
     public function getOrders(){
         $orders = Order::when($this->search != "", function($q){
-            return $q->where('batch','like','%'.$this->search.'%');
+            return $q->where('batch','like','%'.$this->search.'%')->orWhereHas('Client',function($q){
+                return $q->where('name','like','%'.$this->search.'%');
+            })->orWhereHas('Concentrate',function($q){
+                return $q->where('concentrate','like','%'.$this->search.'%');
+            });
         })->paginate(6);
         return $orders;
     }
@@ -71,24 +112,8 @@ class Base extends Component
     public function render()
     {
         $this->boton_activo = $this->orderId > 0;
-        $empresa = null;
         $orders = $this->getOrders();
-        /*$tipoDocumento = $this->checkDocumentNumber('70821326');
-        if($tipoDocumento == "ruc" || $tipoDocumento == "dni"){
-            $empresa = $this->getEntity('70821326',$tipoDocumento);
-            $this->alert('success', '¡Encontrado!', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-        }else{
-            $this->alert('warning', '¡No se puede eliminar el concentrado!', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-        }*/
 
-        return view('livewire.order.base',compact('orders','empresa'));
+        return view('livewire.order.base',compact('orders'));
     }
 }

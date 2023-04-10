@@ -117,12 +117,12 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center text-4xl" wire:loading.flex>
+            <div class="text-4xl text-center" wire:loading.flex>
                 Cargando...
             </div>
         </x-slot>
         <x-slot name="footer">
-            @if($settled)
+            @if(!$settled)
             <x-button wire:loading.attr="disabled" wire:click="registrar">
                 Guardar
             </x-button>
