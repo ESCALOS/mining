@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.form-select{
+    @apply block w-full p-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white bg-no-repeat border border-gray-300 border-solid rounded appearance-none bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+}
+.form-control{
+    @apply border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+}
 .rounded-2xl {	border-radius: 1rem; }
 .p-3 {	padding: .75rem; }
 .col-span-2 {	grid-column: span 2 / span 2; }
@@ -132,9 +138,7 @@
 .bg-purple-700	{background-color: rgb(126 34 206);}
 .bg-purple-800	{background-color: rgb(107 33 168);}
 .bg-purple-900	{background-color: rgb(88 28 135);}
-.sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+
 .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -235,6 +239,12 @@
   }
   .sm\:col-span-4 {
     grid-column: span 4 / span 4;
+  }
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 .h-48 {

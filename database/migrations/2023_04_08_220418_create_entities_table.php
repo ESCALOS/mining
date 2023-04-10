@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('document_number',11);
             $table->string('name',150);
+            $table->string('address',255);
             $table->timestamps();
         });
     }

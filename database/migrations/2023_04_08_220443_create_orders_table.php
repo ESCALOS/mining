@@ -15,17 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('batch',9)->unique();
             $table->string('ticket')->unique();
-            $table->foreignId('client_id')->constrained();
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('entities')->onDelete('restrict');
             $table->foreignId('concentrate_id')->constrained();
             $table->unsignedDecimal('wmt',8,4); //wet metric tonne
             $table->string('origin');
             $table->unsignedBigInteger('carriage_company_id');
             $table->foreign('carriage_company_id')->references('id')->on('entities')->onDelete('restrict');
-            $table->string('plate_number',6);
+            $table->string('plate_number',7);
             $table->string('transport_guide',30);
             $table->string('delivery_note',30);
             $table->unsignedBigInteger('weighing_scale_company_id');
             $table->foreign('weighing_scale_company_id')->references('id')->on('entities')->onDelete('restrict');
+            $table->boolean('seattled')->default(false);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

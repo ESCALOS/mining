@@ -16,7 +16,7 @@ class Base extends Component
     public $search;
     public $boton_activo;
 
-    protected $listeners = ['render'];
+    protected $listeners = ['render','anuladoConfirmado'];
 
     public function mount(){
         $this->search = "";
@@ -36,14 +36,29 @@ class Base extends Component
                 'toast' => true,
             ]);
         }else{
-            Concentrate::find($this->concentrateId)->delete();
-            $this->alert('success', '¡Concentrado Eliminado!', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
+            $this->alert('question','¿Estas seguro de eliminar?',[
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Sí',
+                'onConfirmed' => 'confirmed',
+                'position' => 'center',
+                'toast' => false,
+                'showCancelButton' => true,
+                'cancelButtonText' => 'No',
+                'timer' => 10000,
+                'onConfirmed' => 'anuladoConfirmado',
             ]);
-            $this->render();
+
         }
+    }
+    public function anuladoConfirmado() {
+        Concentrate::find($this->concentrateId)->delete();
+        $this->concentrateId = 0;
+        $this->alert('success', '¡Concentrado Eliminado!', [
+            'position' => 'top-right',
+            'timer' => 2000,
+            'toast' => true,
+        ]);
+        $this->render();
     }
 
     public function getConcentrates(){
