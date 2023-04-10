@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('batch',9)->unique();
+            $table->string('batch',10)->unique();
             $table->string('ticket')->unique();
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('entities')->onDelete('restrict');

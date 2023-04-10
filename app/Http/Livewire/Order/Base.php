@@ -51,44 +51,8 @@ class Base extends Component
         }
     }
 
-    public function settle(){
-        if(Order::find($this->orderId)->settled){
-            $this->alert('warning', '¡Orden ya liquidada!', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-        }else{
-            $this->alert('question','¿Estas seguro de liquidar?',[
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'Sí',
-                'onConfirmed' => 'confirmed',
-                'position' => 'center',
-                'toast' => false,
-                'showCancelButton' => true,
-                'cancelButtonText' => 'No',
-                'timer' => 10000,
-                'onConfirmed' => 'confirmSettle',
-            ]);
-
-        }
-    }
-
     public function anuladoConfirmado() {
         Order::find($this->orderId)->delete();
-        $this->orderId = 0;
-        $this->alert('success', '¡Concentrado Eliminado!', [
-            'position' => 'top-right',
-            'timer' => 2000,
-            'toast' => true,
-        ]);
-        $this->render();
-    }
-
-    public function confirmSettle() {
-        $order = Order::find($this->orderId);
-        $order->settled = true;
-        $order->save();
         $this->orderId = 0;
         $this->alert('success', '¡Concentrado Eliminado!', [
             'position' => 'top-right',

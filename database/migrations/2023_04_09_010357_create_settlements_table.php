@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('settlements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained();
-            $table->string('batch',9)->unique();
+            $table->string('batch',10)->unique();
             $table->boolean('with_invoice')->default(false);
-            $table->unsignedDecimal('wmt_shipped',8,4); // wet metric tonne shipped
+            $table->unsignedDecimal('wmt_shipped',8,4)->default(0); // wet metric tonne shipped
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

@@ -9,39 +9,45 @@ class Settlement extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function InternationalPayment() {
-        $this->hasOne(InternationalPayment::class);
+        return $this->hasOne(InternationalPayment::class);
     }
 
     public function PercentagePayable() {
-        $this->hasOne(PercentagePayable::class);
+        return $this->hasOne(PercentagePayable::class);
     }
 
     public function Law() {
-        $this->hasOne(Law::class);
+        return $this->hasOne(Law::class);
     }
 
     public function Protection() {
-        $this->hasOne(Protection::class);
+        return $this->hasOne(Protection::class);
     }
 
     public function Deduction() {
-        $this->hasOne(Deduction::class);
+        return $this->hasOne(Deduction::class);
     }
 
     public function Refinement() {
-        $this->hasOne(Refinement::class);
+        return $this->hasOne(Refinement::class);
     }
 
     public function Requirement() {
-        $this->hasOne(Requirement::class);
+        return $this->hasOne(Requirement::class);
     }
 
     public function Penalty() {
-        $this->hasOne(Penalty::class);
+        return $this->hasOne(Penalty::class);
     }
 
     public function AllowedAmount() {
-        $this->hasOne(AllowedAmount::class);
+        return $this->hasOne(AllowedAmount::class);
+    }
+
+    public function Order(){
+        return $this->belongsTo(Order::class);
     }
 }

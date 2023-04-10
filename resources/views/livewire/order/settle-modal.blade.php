@@ -1,21 +1,21 @@
 <div>
-    <x-dialog-modal wire:model='open' maxWidth="screen" >
+    <x-dialog-modal wire:model='open' maxWidth="screen">
         <x-slot name="title">
             Registrar Órdenes
         </x-slot>
         <x-slot name="content">
             <div wire:loading.remove>
                 <div class="{{ $page == 2 ? 'hidden' : '' }}">
-                    <div>
+                    <div id="Precio_Internacional">
                         <div class="w-full py-2 bg-gray-600" >
                             <h1 class="text-lg text-center text-white">Precio Internacional</h1>
                         </div>
                         <div class="grid grid-cols-3 mt-4">
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Cobre Internacional:</x-label>
-                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="internationalCupper"/>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="internationalCopper"/>
 
-                                <x-input-error for="internationalCupper"/>
+                                <x-input-error for="internationalCopper"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -34,16 +34,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <div class="w-full py-2 bg-gray-600">
+                    <div id="Ensayes">
+                        <div class="w-full py-2 mt-4 bg-gray-600">
                             <h1 class="text-lg text-center text-white">Ensayes</h1>
                         </div>
                         <div class="grid grid-cols-3 mt-4">
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Ley Cobre(%):</x-label>
-                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="cupperLaw"/>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="copperLaw"/>
 
-                                <x-input-error for="cupperLaw"/>
+                                <x-input-error for="copperLaw"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -92,27 +92,27 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div id="Porcentajes_Pagables">
                         <div class="w-full py-2 mt-4 bg-gray-600">
                             <h1 class="text-lg text-center text-white">Porcentajes Pagables</h1>
                         </div>
                         <div class="grid grid-cols-3 mt-4">
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Cobre(%):</x-label>
-                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="cupperPayable"/>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="copperPayable"/>
 
-                                <x-input-error for="cupperPayable"/>
+                                <x-input-error for="copperPayable"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Plata(Oz):</x-label>
+                                <x-label>Plata(%):</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="silverPayable"/>
 
                                 <x-input-error for="silverPayable"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Oro(Oz):</x-label>
+                                <x-label>Oro(%):</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="goldPayable"/>
 
                                 <x-input-error for="goldPayable"/>
@@ -122,16 +122,16 @@
                     </div>
                 </div>
                 <div class="{{ $page == 1 ? 'hidden' : '' }}">
-                    <div>
+                    <div id="Requerimientos">
                         <div class="w-full py-2 mt-4 bg-gray-600">
                             <h1 class="text-lg text-center text-white">Requerimientos</h1>
                         </div>
                         <div class="grid grid-cols-3 mt-4">
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Protección Cobre:</x-label>
-                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="cupperProtection"/>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="copperProtection"/>
 
-                                <x-input-error for="cupperProtection"/>
+                                <x-input-error for="copperProtection"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -150,9 +150,9 @@
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Decucción Cobre:</x-label>
-                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="cupperDeduction"/>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="copperDeduction"/>
 
-                                <x-input-error for="cupperDeduction"/>
+                                <x-input-error for="copperDeduction"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -171,9 +171,9 @@
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Refinamiento Cobre:</x-label>
-                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="cupperRefinement"/>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="copperRefinement"/>
 
-                                <x-input-error for="cupperRefinement"/>
+                                <x-input-error for="copperRefinement"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -212,102 +212,102 @@
 
                             </div>
                         </div>
-                        <div>
-                            <div class="w-full py-2 mt-4 bg-gray-600">
-                                <h1 class="text-lg text-center text-white">Penalidades</h1>
+                    </div>
+                    <div id="Penalidades">
+                        <div class="w-full py-2 mt-4 bg-gray-600">
+                            <h1 class="text-lg text-center text-white">Penalidades</h1>
+                        </div>
+                        <div class="grid grid-cols-3 mt-4 sm:grid-cols-6">
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Arsénico:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="arsenicPenalty"/>
+
+                                <x-input-error for="arsenic_penalty"/>
+
                             </div>
-                            <div class="grid grid-cols-3 mt-4 sm:grid-cols-6">
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Arsénico:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="arsenicPenalty"/>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Antiminio:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyPenalty"/>
 
-                                    <x-input-error for="arsenic_penalty"/>
+                                <x-input-error for="antomonyPenalty"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Antiminio:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyPenalty"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Plomo:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="leadPenalty"/>
 
-                                    <x-input-error for="antomonyPenalty"/>
+                                <x-input-error for="leadPenalty"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Plomo:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="leadPenalty"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Zinc:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="zincPenalty"/>
 
-                                    <x-input-error for="leadPenalty"/>
+                                <x-input-error for="zincPenalty"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Zinc:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="zincPenalty"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Bismuto:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="bismuthPenalty"/>
 
-                                    <x-input-error for="zincPenalty"/>
+                                <x-input-error for="bismuthPenalty"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Bismuto:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="bismuthPenalty"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Mercurio:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="mercuryPenalty"/>
 
-                                    <x-input-error for="bismuthPenalty"/>
+                                <x-input-error for="mercuryPenalty"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Mercurio:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="mercuryPenalty"/>
-
-                                    <x-input-error for="mercuryPenalty"/>
-
-                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="w-full py-2 mt-4 bg-gray-600">
-                                <h1 class="text-lg text-center text-white">Máximo Permitido</h1>
+                    </div>
+                    <div id="Maximo_Permitdo">
+                        <div class="w-full py-2 mt-4 bg-gray-600">
+                            <h1 class="text-lg text-center text-white">Máximo Permitido</h1>
+                        </div>
+                        <div class="grid grid-cols-3 mt-4 sm:grid-cols-6">
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Arsénico:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="arsenicMaximum"/>
+
+                                <x-input-error for="arsenic_Maximum"/>
+
                             </div>
-                            <div class="grid grid-cols-3 mt-4 sm:grid-cols-6">
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Arsénico:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="arsenicMaximum"/>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Antiminio:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyMaximum"/>
 
-                                    <x-input-error for="arsenic_Maximum"/>
+                                <x-input-error for="antomonyMaximum"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Antiminio:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyMaximum"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Plomo:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="leadMaximum"/>
 
-                                    <x-input-error for="antomonyMaximum"/>
+                                <x-input-error for="leadMaximum"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Plomo:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="leadMaximum"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Zinc:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="zincMaximum"/>
 
-                                    <x-input-error for="leadMaximum"/>
+                                <x-input-error for="zincMaximum"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Zinc:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="zincMaximum"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Bismuto:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="bismuthMaximum"/>
 
-                                    <x-input-error for="zincMaximum"/>
+                                <x-input-error for="bismuthMaximum"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Bismuto:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="bismuthMaximum"/>
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Mercurio:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="mercuryMaximum"/>
 
-                                    <x-input-error for="bismuthMaximum"/>
+                                <x-input-error for="mercuryMaximum"/>
 
-                                </div>
-                                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                    <x-label>Mercurio:</x-label>
-                                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer="mercuryMaximum"/>
-
-                                    <x-input-error for="mercuryMaximum"/>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -327,11 +327,11 @@
                 Siguiente
             </x-boton-crud>
             @endif
-            <x-button class="ml-2" wire:loading.attr="disabled" wire:click="registrar">
+            <x-button class="ml-2" wire:loading.attr="disabled" wire:click="confirmSettle">
                 Guardar
             </x-button>
 
-            <div wire:loading wire:target='registrar'>
+            <div wire:loading wire:target='settle'>
                 Registrando...
             </div>
             <x-secondary-button wire:click="$set('open',false)" class="ml-2">

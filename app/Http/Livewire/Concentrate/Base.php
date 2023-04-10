@@ -39,7 +39,6 @@ class Base extends Component
             $this->alert('question','¿Estas seguro de eliminar?',[
                 'showConfirmButton' => true,
                 'confirmButtonText' => 'Sí',
-                'onConfirmed' => 'confirmed',
                 'position' => 'center',
                 'toast' => false,
                 'showCancelButton' => true,

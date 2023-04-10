@@ -244,9 +244,7 @@ class Modal extends Component
 
     public function registrar(){
         $this->validate();
-        $entity = Entity::where('document_number',$this->clientDocumentNumber)->first();
-        $entity->address = strtoupper($this->clientAddress);
-        $entity->save();
+        $this->saveAddress($this->clientDocumentNumber,$this->clientAddress);
         if($this->orderId > 0){
             $order = Order::find($this->orderId);
             if($order->settled){
@@ -261,7 +259,7 @@ class Modal extends Component
             $order = new Order();
         }
         $order->ticket = strtoupper($this->ticket);
-        $order->batch = $this->createCorrelative();
+        $order->batch = $this->createBatch();
         $order->client_id = Entity::where('document_number',$this->clientDocumentNumber)->first()->id;
         $order->concentrate_id = $this->concentrateId;
         $order->wmt = $this->wmt;
@@ -285,8 +283,8 @@ class Modal extends Component
         $this->resetExcept('open','concentrates');
     }
 
-    public function createCorrelative(){
-        $fecha = Carbon::now()->isoFormat('YYMM');
+    public function createBatch(){
+        $fecha = 'O'.Carbon::now()->isoFormat('YYMM');
         $last_batch = explode("-",Order::latest()->first()->batch);
         if($fecha != $last_batch[0]){
             $correlativo = '0001';
@@ -346,6 +344,11 @@ class Modal extends Component
 
             // Datos de empresas según padron reducido
             return $empresa;
+    }
+    public function saveAddress($documentNumber,$address){
+        $entity = Entity::where('document_number',$documentNumber)->first();
+        $entity->address = strtoupper($address);
+        $entity->save();
     }
 
     public function render()

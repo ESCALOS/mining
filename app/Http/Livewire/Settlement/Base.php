@@ -16,11 +16,11 @@ class Base extends Component
     public $search;
     public $boton_activo;
 
-    protected $listeners = ['render','anuladoConfirmado'];
+    protected $listeners = ['render'];
 
     public function mount(){
         $this->search = "";
-        $this->settlementId = 0;
+        $this->settlementId = [];
         $this->boton_activo = false;
     }
 
@@ -32,11 +32,13 @@ class Base extends Component
     }
 
     public function seleccionar($id) {
-        $this->settlementId = $id;
+        if(in_array($id,$this->settlementId)){
+            array_push($this->settlementId,$id);
+        }
     }
     public function render()
     {
-        $this->boton_activo = $this->settlementId > 0;
+        $this->boton_activo = $this->settlementId != [];
         $settlements = $this->getSettlements();
 
         return view('livewire.settlement.base',compact('settlements'));

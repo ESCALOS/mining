@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedDecimal('silver_factor',8,4);
             $table->unsignedDecimal('gold',8,4);
             $table->unsignedDecimal('gold_factor',8,4);
+            $table->unsignedDecimal('tms',8,4);
+            $table->unsignedDecimal('tmns',8,4);
             $table->timestamps();
         });
     }
