@@ -30,6 +30,7 @@ class Modal extends Component
     public $deliveryNote;
     public $weighingScaleDocumentNumber;
     public $weighingScaleName;
+    public $settled;
 
     protected $listeners = ['abrirModal'];
 
@@ -93,6 +94,7 @@ class Modal extends Component
         $this->deliveryNote = "";
         $this->weighingScaleDocumentNumber = "";
         $this->weighingScaleName = "";
+        $this->settled = true;
     }
 
     public function abrirModal($id){
@@ -102,15 +104,20 @@ class Modal extends Component
         if($id > 0){
             $order = Order::find($id);
             $this->ticket = $order->ticket;
-            //$this->clientDocumentNumber = $order->clientDocumentNumber;
+            $this->clientDocumentNumber = $order->Client->document_number;
+            $this->clientName = $order->Client->name;
+            $this->clientAddress = $order->Client->address;
             $this->concentrateId = $order->concentrate_id;
-            $this->wmt = $order->wmt;
+            $this->wmt = number_format($order->wmt,3);
             $this->origin = $order->origin;
-            //$this->carriageDocumentNumber = $order->carriage_document_number;
+            $this->carriageDocumentNumber = $order->Carriage->document_number;
+            $this->carriageName = $order->Carriage->name;
             $this->plateNumber = $order->plate_number;
             $this->transportGuide = $order->transport_guide;
             $this->deliveryNote = $order->delivery_note;
-            //$this->weighingScaleDocumentNumber = $order->weighning_scale_document_number;
+            $this->weighingScaleDocumentNumber = $order->WeighingScale->document_number;
+            $this->weighingScaleName = $order->WeighingScale->name;
+            $this->settled = $order->settled;
         }
         $this->open = true;
     }
@@ -241,7 +248,6 @@ class Modal extends Component
         $entity->save();
         if($this->orderId > 0){
             $order = Order::find($this->orderId);
-
         }else{
             $order = new Order();
         }
@@ -263,12 +269,11 @@ class Modal extends Component
             'timer' => 2000,
             'toast' => true,
            ]);
-        $this->resetExcept('open','concentrates');
         $this->emitTo('order.base', 'render');
         if($this->orderId > 0){
             $this->open = false;
         }
-
+        $this->resetExcept('open','concentrates');
     }
 
     public function checkDocumentNumber($numero){

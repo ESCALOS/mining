@@ -45,7 +45,7 @@
                     </td>
                     <td class="py-3 text-center">
                         <div>
-                            <span class="font-medium">{{ $order->wmt }}</span>
+                            <span class="font-medium">{{ number_format($order->wmt,3) }}</span>
                         </div>
                     </td>
                     <td class="py-3 text-center">

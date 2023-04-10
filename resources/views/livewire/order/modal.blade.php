@@ -4,7 +4,7 @@
             Registrar Órdenes
         </x-slot>
         <x-slot name="content">
-            <div>
+            <div wire:loading.remove>
                 <div class="grid grid-cols-1 sm:grid-cols-2">
                     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                         <x-label>Ticket:</x-label>
@@ -117,12 +117,17 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center text-4xl" wire:loading.flex>
+                Cargando...
+            </div>
         </x-slot>
         <x-slot name="footer">
+            @if($settled)
             <x-button wire:loading.attr="disabled" wire:click="registrar">
                 Guardar
             </x-button>
-            <div wire:loading>
+            @endif
+            <div wire:loading wire:target='registrar'>
                 Registrando...
             </div>
             <x-secondary-button wire:click="$set('open',false)" class="ml-2">

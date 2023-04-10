@@ -13,6 +13,14 @@ class Order extends Model
         return $this->belongsTo(Entity::class,'client_id');
     }
 
+    public function Carriage(){
+        return $this->belongsTo(Entity::class,'carriage_company_id');
+    }
+
+    public function WeighingScale(){
+        return $this->belongsTo(Entity::class,'weighing_scale_company_id');
+    }
+
     public function Concentrate(){
         return $this->belongsTo(Concentrate::class);
     }
