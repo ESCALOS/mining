@@ -27,7 +27,7 @@ class Base extends Component
     public function getSettlements(){
         $settlements = Settlement::when($this->search != "", function($q){
             return $q->where('batch','like','%'.$this->search.'%');
-        })->paginate(6);
+        })->latest()->paginate(6);
         return $settlements;
     }
 

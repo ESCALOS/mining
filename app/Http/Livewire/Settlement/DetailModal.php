@@ -42,7 +42,7 @@ class DetailModal extends Component
         if($this->settlementId > 0){
             $settlement = Settlement::find($this->settlementId);
             $this->payableTotal = $settlement->PayableTotal->total_price_copper+$settlement->PayableTotal->total_price_silver+$settlement->PayableTotal->total_price_gold;
-            $this->deductionTotal = $settlement->DeductionTotal->total_price_copper+$settlement->DeductionTotal->total_price_silver+$settlement->DeductionTotal->total_price_gold;
+            $this->deductionTotal = $settlement->DeductionTotal->total_price_copper+$settlement->DeductionTotal->total_price_silver+$settlement->DeductionTotal->total_price_gold+$settlement->DeductionTotal->maquila+$settlement->DeductionTotal->analysis+$settlement->DeductionTotal->stevedore;
             $this->penaltyTotal = $settlement->PenaltyTotal->total_arsenic+$settlement->PenaltyTotal->total_antomony+$settlement->PenaltyTotal->total_bismuth+$settlement->PenaltyTotal->total_lead+$settlement->PenaltyTotal->total_zinc+$settlement->PenaltyTotal->total_mercury;
             $this->total_unit = $this->payableTotal - $this->deductionTotal - $this->penaltyTotal;
             $this->batch_value = $this->total_unit*$settlement->Law->tmns;

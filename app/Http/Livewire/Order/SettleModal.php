@@ -16,6 +16,7 @@ use App\Models\Protection;
 use App\Models\Refinement;
 use App\Models\Requirement;
 use App\Models\Settlement;
+use App\Models\SettlementTotal;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -149,43 +150,43 @@ class SettleModal extends Component
 
     protected function rules(){
         return [
-            'internationalCopper' => 'required|decimal:0,3',
-            'internationalSilver' => 'required|decimal:0,3',
-            'internationalGold' => 'required|decimal:0,3',
-            'copperLaw' => 'required|decimal:0,3',
-            'humidity' => 'required|decimal:0,3',
-            'decrease' => 'required|decimal:0,3',
-            'silverLaw' => 'required|decimal:0,3',
+            'internationalCopper' => 'required|decimal:0,4',
+            'internationalSilver' => 'required|decimal:0,4',
+            'internationalGold' => 'required|decimal:0,4',
+            'copperLaw' => 'required|decimal:0,4',
+            'humidity' => 'required|decimal:0,4',
+            'decrease' => 'required|decimal:0,4',
+            'silverLaw' => 'required|decimal:0,4',
             'silverFactor' => 'required|decimal:0,4',
-            'goldLaw' => 'required|decimal:0,3',
+            'goldLaw' => 'required|decimal:0,4',
             'goldFactor' => 'required|decimal:0,4',
-            'copperPayable' => 'required|decimal:0,3',
-            'silverPayable' => 'required|decimal:0,3',
-            'goldPayable' => 'required|decimal:0,3',
-            'copperProtection' => 'required|decimal:0,3',
-            'silverProtection' => 'required|decimal:0,3',
-            'goldProtection' => 'required|decimal:0,3',
-            'copperDeduction' => 'required|decimal:0,3',
-            'silverDeduction' => 'required|decimal:0,3',
-            'goldDeduction' => 'required|decimal:0,3',
-            'copperRefinement' => 'required|decimal:0,3',
-            'silverRefinement' => 'required|decimal:0,3',
-            'goldRefinement' => 'required|decimal:0,3',
-            'maquila' => 'required|decimal:0,3',
-            'analysis' => 'required|decimal:0,3',
-            'stevedore' => 'required|decimal:0,3',
-            'arsenicPenalty' => 'required|decimal:0,3',
-            'antomonyPenalty' => 'required|decimal:0,3',
-            'leadPenalty' => 'required|decimal:0,3',
-            'zincPenalty' => 'required|decimal:0,3',
-            'bismuthPenalty' => 'required|decimal:0,3',
-            'mercuryPenalty' => 'required|decimal:0,3',
-            'arsenicMaximum' => 'required|decimal:0,3',
-            'antomonyMaximum' => 'required|decimal:0,3',
-            'leadMaximum' => 'required|decimal:0,3',
-            'zincMaximum' => 'required|decimal:0,3',
-            'bismuthMaximum' => 'required|decimal:0,3',
-            'mercuryMaximum' => 'required|decimal:0,3',
+            'copperPayable' => 'required|decimal:0,4',
+            'silverPayable' => 'required|decimal:0,4',
+            'goldPayable' => 'required|decimal:0,4',
+            'copperProtection' => 'required|decimal:0,4',
+            'silverProtection' => 'required|decimal:0,4',
+            'goldProtection' => 'required|decimal:0,4',
+            'copperDeduction' => 'required|decimal:0,4',
+            'silverDeduction' => 'required|decimal:0,4',
+            'goldDeduction' => 'required|decimal:0,4',
+            'copperRefinement' => 'required|decimal:0,4',
+            'silverRefinement' => 'required|decimal:0,4',
+            'goldRefinement' => 'required|decimal:0,4',
+            'maquila' => 'required|decimal:0,4',
+            'analysis' => 'required|decimal:0,4',
+            'stevedore' => 'required|decimal:0,4',
+            'arsenicPenalty' => 'required|decimal:0,4',
+            'antomonyPenalty' => 'required|decimal:0,4',
+            'leadPenalty' => 'required|decimal:0,4',
+            'zincPenalty' => 'required|decimal:0,4',
+            'bismuthPenalty' => 'required|decimal:0,4',
+            'mercuryPenalty' => 'required|decimal:0,4',
+            'arsenicMaximum' => 'required|decimal:0,4',
+            'antomonyMaximum' => 'required|decimal:0,4',
+            'leadMaximum' => 'required|decimal:0,4',
+            'zincMaximum' => 'required|decimal:0,4',
+            'bismuthMaximum' => 'required|decimal:0,4',
+            'mercuryMaximum' => 'required|decimal:0,4',
         ];
     }
 
@@ -381,29 +382,29 @@ class SettleModal extends Component
                     $payableTotal = new PayableTotal();
                     $payableTotal->settlement_id = $settlement->id;
 
-                    $payableTotalCopperPercent = ($this->copperLaw*$this->copperPayable-$this->copperDeduction)/100;
-                    $payableTotal->unit_price_copper =round(($this->internationalCopper - $this->copperProtection)*2204.62,2, PHP_ROUND_HALF_DOWN);
-                    $payableTotal->total_price_copper =round($payableTotal->unit_price_copper*$payableTotalCopperPercent,3, PHP_ROUND_HALF_DOWN);
+                    $payableTotalCopperPercent = ($this->copperLaw/100*$this->copperPayable/100-$this->copperDeduction/100);
+                    $payableTotal->unit_price_copper =floor((($this->internationalCopper - $this->copperProtection)*2204.62)*100)/100;
+                    $payableTotal->total_price_copper =floor($payableTotal->unit_price_copper*$payableTotalCopperPercent*1000)/1000;
 
-                    $payableTotalSilverPercent = ($this->copperLaw*$this->copperPayable-$this->copperDeduction)/100;
-                    $payableTotal->unit_price_silver =round(($this->internationalSilver - $this->silverProtection)*2204.62,2, PHP_ROUND_HALF_DOWN);
-                    $payableTotal->total_price_silver =round(($payableTotal->unit_price_silver*$payableTotalSilverPercent),3, PHP_ROUND_HALF_DOWN);
+                    $payableTotalSilverPercent = floor(($this->silverLaw*$this->silverFactor*$this->silverPayable/100-$this->silverDeduction)*1000)/1000;
+                    $payableTotal->unit_price_silver =$this->internationalSilver - $this->silverProtection;
+                    $payableTotal->total_price_silver =floor(($payableTotal->unit_price_silver*$payableTotalSilverPercent)*1000)/1000;
 
-                    $payableTotalGoldPercent = ($this->copperLaw*$this->copperPayable-$this->copperDeduction)/100;
-                    $payableTotal->unit_price_gold =round(($this->internationalGold - $this->goldProtection)*2204.62,2, PHP_ROUND_HALF_DOWN);
-                    $payableTotal->total_price_gold =round(($payableTotal->unit_price_gold*$payableTotalGoldPercent),3, PHP_ROUND_HALF_DOWN);
+                    $payableTotalGoldPercent = floor(($this->goldLaw*$this->goldFactor*$this->goldPayable/100-$this->goldDeduction)*100)/100;
+                    $payableTotal->unit_price_gold =floor(($this->internationalGold - $this->goldProtection)*100)/100;
+                    $payableTotal->total_price_gold =floor(($payableTotal->unit_price_gold*$payableTotalGoldPercent)*1000)/1000;
 
                     $deductionTotal = new DeductionTotal();
                     $deductionTotal->settlement_id = $settlement->id;
 
-                    $deductionTotal->unit_price_copper = round(2204.62*$this->copperRefinement,3,PHP_ROUND_HALF_DOWN);
-                    $deductionTotal->total_price_copper = round($payableTotalCopperPercent*$deductionTotal->unit_price_copper,3,PHP_ROUND_HALF_DOWN);
+                    $deductionTotal->unit_price_copper = floor(2204.62*$this->copperRefinement*10000)/10000;
+                    $deductionTotal->total_price_copper = floor(($payableTotalCopperPercent*$deductionTotal->unit_price_copper)*1000)/1000;
 
-                    $deductionTotal->unit_price_silver = round(2204.62*$this->silverRefinement,3,PHP_ROUND_HALF_DOWN);
-                    $deductionTotal->total_price_silver = round($payableTotalSilverPercent*$deductionTotal->unit_price_silver,3,PHP_ROUND_HALF_DOWN);
+                    $deductionTotal->unit_price_silver = $this->silverRefinement;
+                    $deductionTotal->total_price_silver = floor($payableTotalSilverPercent*$deductionTotal->unit_price_silver*1000)/1000;
 
-                    $deductionTotal->unit_price_gold = round(2204.62*$this->goldRefinement,3,PHP_ROUND_HALF_DOWN);
-                    $deductionTotal->total_price_gold = round($payableTotalGoldPercent*$deductionTotal->unit_price_gold,3,PHP_ROUND_HALF_DOWN);
+                    $deductionTotal->unit_price_gold = $this->goldRefinement;
+                    $deductionTotal->total_price_gold = floor($payableTotalGoldPercent*$deductionTotal->unit_price_gold*1000)/1000;
 
                     $deductionTotal->maquila = $this->maquila;
                     $deductionTotal->analysis = $this->analysis/$law->tmns;
@@ -420,11 +421,24 @@ class SettleModal extends Component
                     $penaltyTotal->leftover_mercury = $this->mercuryPenalty - $this->mercuryMaximum > 0 ? $this->mercuryPenalty - $this->mercuryMaximum : 0;
 
                     $penaltyTotal->total_arsenic = $penaltyTotal->leftover_arsenic*100;
-                    $penaltyTotal->total_antomony = round($penaltyTotal->leftover_antomony*106.5,3,PHP_ROUND_HALF_DOWN);
+                    $penaltyTotal->total_antomony = round($penaltyTotal->leftover_antomony*106.5,4,PHP_ROUND_HALF_DOWN);
                     $penaltyTotal->total_lead = $penaltyTotal->leftover_lead*5;
                     $penaltyTotal->total_zinc = $penaltyTotal->leftover_zinc*5;
                     $penaltyTotal->total_bismuth = $penaltyTotal->leftover_bismuth*500;
                     $penaltyTotal->total_mercury = $penaltyTotal->leftover_mercury/2;
+
+                    $settlementTotal = new SettlementTotal();
+                    $settlementTotal->settlement_id = $settlement->id;
+
+                    $settlementTotal->payable_total = $payableTotal->total_price_copper+$payableTotal->total_price_silver+$payableTotal->total_price_gold;
+                    $settlementTotal->deduction_total = $deductionTotal->total_price_copper+$deductionTotal->total_price_silver+$deductionTotal->total_price_gold+$deductionTotal->maquila+$deductionTotal->analysis+$deductionTotal->stevedore;
+                    $settlementTotal->penalty_total = $penaltyTotal->total_arsenic+$penaltyTotal->total_antomony+$penaltyTotal->total_lead+$penaltyTotal->total_zinc+$penaltyTotal->total_bismuth+$penaltyTotal->total_mercury;
+                    $settlementTotal->unit_price = $settlementTotal->payable_total-$settlementTotal->deduction_total-$settlementTotal->penalty_total;
+                    $settlementTotal->batch_price = $settlementTotal->unit_price*$law->tmns;
+                    $settlementTotal->igv = $settlementTotal->batch_price*0.18;
+                    $settlementTotal->detraccion = ($settlementTotal->batch_price+$settlementTotal->igv)*0.1;
+                    $settlementTotal->total = $settlementTotal->batch_price+$settlementTotal->igv-$settlementTotal->detraccion;
+
 
                     $penaltyTotal->save();
 
@@ -433,6 +447,7 @@ class SettleModal extends Component
                     $order->save();
                     $allowedAmount->save();
                     $deductionTotal->save();
+                    $settlementTotal->save();
             });
             $this->emitTo('order.base', 'render');
             $this->alert('success', 'Orden Liquidada', [

@@ -19,8 +19,18 @@ class DatabaseSeeder extends Seeder
              'name' => 'Carlos Escate Roman',
              'email' => 'stornblood6969@gmail.com',
         ]);
-
+        $user2 = User::factory()->create([
+            'name' => 'Administrador',
+            'email' => 'prinmig70@gmail.com',
+            'password' => 'Clari',
+       ]);
+       $user3 = User::factory()->create([
+           'name' => 'Rubén Tipiani',
+           'email' => 'rtipiani@gmail.com',
+      ]);
         $role = \Spatie\Permission\Models\Role::create(['name' => 'administrador']);
         $user->assignRole($role);
+        $user2->assignRole($role);
+        $user3->assignRole($role);
     }
 }

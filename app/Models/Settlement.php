@@ -62,4 +62,8 @@ class Settlement extends Model
     public function PenaltyTotal(){
         return $this->hasOne(PenaltyTotal::class);
     }
+
+    public function SettlementTotal(){
+        return $this->hasOne(SettlementTotal::class);
+    }
 }

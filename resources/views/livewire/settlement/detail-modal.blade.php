@@ -24,28 +24,28 @@
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->copper) }}%</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->PercentagePayable->copper) }}%</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Deduction->copper) }}%</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_copper,2) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->total_price_copper,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_copper,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->total_price_copper,3) }}</td>
                         </tr>
                         <tr>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">Ag Oz/TC</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->silver) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->PercentagePayable->silver) }}%</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Deduction->silver) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_silver,2) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->total_price_silver,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_silver,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->total_price_silver,3) }}</td>
                         </tr>
                         <tr>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">Au Oz/TC</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->gold) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->PercentagePayable->gold) }}%</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Deduction->gold) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_gold,2) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->total_price_gold,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_gold,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->total_price_gold,3) }}</td>
                         </tr>
                         <tr>
                             <td colspan="5" style="border: 2px solid black;padding: 1rem;text-align: center;font-weight:bolder">Total Pagable / TM</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($payableTotal,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->payable_total,3) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -76,8 +76,23 @@
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->total_price_gold,3) }}</td>
                         </tr>
                         <tr>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">Maquila</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->maquila,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->maquila,3) }}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">Ánalisis</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->analysis,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->analysis,3) }}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">Estibadores</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->stevedore,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->stevedore,3) }}</td>
+                        </tr>
+                        <tr>
                             <td colspan="2" style="border: 2px solid black;padding: 1rem;text-align: center;font-weight:bolder">Total Deducciones</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($deductionTotal,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->deduction_total,3) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -131,7 +146,7 @@
                         </tr>
                         <tr>
                             <td colspan="3" style="border: 2px solid black;padding: 1rem;text-align: center;font-weight:bolder">Total Penalidades</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($penaltyTotal,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->penalty_total,3) }}</td>
                         </tr>
                     </tbody>
                 </table>
