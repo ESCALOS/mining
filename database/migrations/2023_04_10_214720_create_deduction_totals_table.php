@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('deduction_totals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('settlement_id')->constrained();
-            $table->decimal('unit_price_copper',8,4);
-            $table->decimal('total_price_copper',8,4);
-            $table->decimal('unit_price_silver',8,4);
-            $table->decimal('total_price_silver',8,4);
-            $table->decimal('unit_price_gold',8,4);
-            $table->decimal('total_price_gold',8,4);
-            $table->decimal('maquila',8,4);
-            $table->decimal('analysis',8,4);
-            $table->decimal('stevedore',8,4);
+            $table->decimal('unit_price_copper',12,4);
+            $table->decimal('total_price_copper',12,4);
+            $table->decimal('unit_price_silver',12,4);
+            $table->decimal('total_price_silver',12,4);
+            $table->decimal('unit_price_gold',12,4);
+            $table->decimal('total_price_gold',12,4);
+            $table->decimal('maquila',12,4);
+            $table->decimal('analysis',12,4);
+            $table->decimal('stevedore',12,4);
             $table->timestamps();
         });
     }

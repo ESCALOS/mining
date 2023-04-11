@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('percentage_payables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('settlement_id')->constrained();
-            $table->unsignedDecimal('copper',8,4);
-            $table->unsignedDecimal('silver',8,4);
-            $table->unsignedDecimal('gold',8,4);
+            $table->unsignedDecimal('copper',12,4);
+            $table->unsignedDecimal('silver',12,4);
+            $table->unsignedDecimal('gold',12,4);
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained();
             $table->string('batch',10)->unique();
             $table->boolean('with_invoice')->default(false);
-            $table->unsignedDecimal('wmt_shipped',8,4)->default(0); // wet metric tonne shipped
+            $table->unsignedDecimal('wmt_shipped',12,4)->default(0); // wet metric tonne shipped
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

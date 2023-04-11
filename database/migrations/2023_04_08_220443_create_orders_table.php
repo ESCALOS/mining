@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('entities')->onDelete('restrict');
             $table->foreignId('concentrate_id')->constrained();
-            $table->unsignedDecimal('wmt',8,4); //wet metric tonne
+            $table->unsignedDecimal('wmt',12,4); //wet metric tonne
             $table->string('origin');
             $table->unsignedBigInteger('carriage_company_id');
             $table->foreign('carriage_company_id')->references('id')->on('entities')->onDelete('restrict');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('delivery_note',30);
             $table->unsignedBigInteger('weighing_scale_company_id');
             $table->foreign('weighing_scale_company_id')->references('id')->on('entities')->onDelete('restrict');
-            $table->boolean('seattled')->default(false);
+            $table->boolean('settled')->default(false);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

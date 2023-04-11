@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('laws', function (Blueprint $table) {
             $table->id();
             $table->foreignId('settlement_id')->constrained();
-            $table->unsignedDecimal('copper',8,4);
-            $table->unsignedDecimal('humidity',8,4);
-            $table->unsignedDecimal('decrease',8,4);
-            $table->unsignedDecimal('silver',8,4);
-            $table->unsignedDecimal('silver_factor',8,4);
-            $table->unsignedDecimal('gold',8,4);
-            $table->unsignedDecimal('gold_factor',8,4);
-            $table->unsignedDecimal('tms',8,4);
-            $table->unsignedDecimal('tmns',8,4);
+            $table->unsignedDecimal('copper',12,4);
+            $table->unsignedDecimal('humidity',12,4);
+            $table->unsignedDecimal('decrease',12,4);
+            $table->unsignedDecimal('silver',12,4);
+            $table->unsignedDecimal('silver_factor',12,4);
+            $table->unsignedDecimal('gold',12,4);
+            $table->unsignedDecimal('gold_factor',12,4);
+            $table->unsignedDecimal('tms',12,4);
+            $table->unsignedDecimal('tmns',12,4);
             $table->timestamps();
         });
     }

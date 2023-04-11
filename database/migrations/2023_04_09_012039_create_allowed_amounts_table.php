@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('allowed_amounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('settlement_id')->constrained();
-            $table->unsignedDecimal('arsenic',8,4);
-            $table->unsignedDecimal('antomony',8,4);
-            $table->unsignedDecimal('lead',8,4);
-            $table->unsignedDecimal('zinc',8,4);
-            $table->unsignedDecimal('bismuth',8,4);
-            $table->unsignedDecimal('mercury',8,4);
+            $table->unsignedDecimal('arsenic',12,4);
+            $table->unsignedDecimal('antomony',12,4);
+            $table->unsignedDecimal('lead',12,4);
+            $table->unsignedDecimal('zinc',12,4);
+            $table->unsignedDecimal('bismuth',12,4);
+            $table->unsignedDecimal('mercury',12,4);
             $table->timestamps();
         });
     }

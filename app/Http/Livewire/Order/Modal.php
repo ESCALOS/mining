@@ -285,11 +285,12 @@ class Modal extends Component
 
     public function createBatch(){
         $fecha = 'O'.Carbon::now()->isoFormat('YYMM');
-        $last_batch = explode("-",Order::latest()->first()->batch);
-        if($fecha != $last_batch[0]){
-            $correlativo = '0001';
-        }else{
-            $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
+        $correlativo = '0001';
+        if(Order::limit(1)->exists()){
+            $last_batch = explode("-",Order::latest()->first()->batch);
+            if($fecha == $last_batch[0]){
+                $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
+            }
         }
         return $fecha.'-'.$correlativo;
     }

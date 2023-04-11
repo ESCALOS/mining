@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('dispatch_id')->constrained();
             $table->foreignId('settlement_id')->constrained();
-            $table->decimal('wmt',8,4); // wet metric tonne
+            $table->decimal('wmt',12,4); // wet metric tonne
             $table->timestamps();
         });
     }

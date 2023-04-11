@@ -1,7 +1,7 @@
 <div>
     <x-dialog-modal wire:model='open' maxWidth="screen">
         <x-slot name="title">
-            Registrar Órdenes
+            Liquidar Órdenes
         </x-slot>
         <x-slot name="content">
             <div wire:loading.remove>

@@ -382,28 +382,28 @@ class SettleModal extends Component
                     $payableTotal->settlement_id = $settlement->id;
 
                     $payableTotalCopperPercent = ($this->copperLaw*$this->copperPayable-$this->copperDeduction)/100;
-                    $payableTotal->unit_price_copper =floor(($this->internationalCopper - $this->copperProtection)*2204.62,2);
-                    $payableTotal->total_price_copper =floor(($payableTotal->unit_price_copper*$payableTotalCopperPercent),3);
+                    $payableTotal->unit_price_copper =round(($this->internationalCopper - $this->copperProtection)*2204.62,2, PHP_ROUND_HALF_DOWN);
+                    $payableTotal->total_price_copper =round($payableTotal->unit_price_copper*$payableTotalCopperPercent,3, PHP_ROUND_HALF_DOWN);
 
                     $payableTotalSilverPercent = ($this->copperLaw*$this->copperPayable-$this->copperDeduction)/100;
-                    $payableTotal->unit_price_silver =floor(($this->internationalSilver - $this->silverProtection)*2204.62,2);
-                    $payableTotal->total_price_silver =floor(($payableTotal->unit_price_silver*$payableTotalSilverPercent),3);
+                    $payableTotal->unit_price_silver =round(($this->internationalSilver - $this->silverProtection)*2204.62,2, PHP_ROUND_HALF_DOWN);
+                    $payableTotal->total_price_silver =round(($payableTotal->unit_price_silver*$payableTotalSilverPercent),3, PHP_ROUND_HALF_DOWN);
 
                     $payableTotalGoldPercent = ($this->copperLaw*$this->copperPayable-$this->copperDeduction)/100;
-                    $payableTotal->unit_price_gold =floor(($this->internationalGold - $this->goldProtection)*2204.62,2);
-                    $payableTotal->total_price_gold =floor(($payableTotal->unit_price_gold*$payableTotalGoldPercent),3);
+                    $payableTotal->unit_price_gold =round(($this->internationalGold - $this->goldProtection)*2204.62,2, PHP_ROUND_HALF_DOWN);
+                    $payableTotal->total_price_gold =round(($payableTotal->unit_price_gold*$payableTotalGoldPercent),3, PHP_ROUND_HALF_DOWN);
 
                     $deductionTotal = new DeductionTotal();
                     $deductionTotal->settlement_id = $settlement->id;
 
-                    $deductionTotal->unit_price_copper = 2204.62*$this->copperRefinement;
-                    $deductionTotal->total_price_copper = $payableTotalCopperPercent*$deductionTotal->unit_price_copper;
+                    $deductionTotal->unit_price_copper = round(2204.62*$this->copperRefinement,3,PHP_ROUND_HALF_DOWN);
+                    $deductionTotal->total_price_copper = round($payableTotalCopperPercent*$deductionTotal->unit_price_copper,3,PHP_ROUND_HALF_DOWN);
 
-                    $deductionTotal->unit_price_silver = 2204.62*$this->silverRefinement;
-                    $deductionTotal->total_price_silver = $payableTotalSilverPercent*$deductionTotal->unit_price_silver;
+                    $deductionTotal->unit_price_silver = round(2204.62*$this->silverRefinement,3,PHP_ROUND_HALF_DOWN);
+                    $deductionTotal->total_price_silver = round($payableTotalSilverPercent*$deductionTotal->unit_price_silver,3,PHP_ROUND_HALF_DOWN);
 
-                    $deductionTotal->unit_price_gold = 2204.62*$this->goldRefinement;
-                    $deductionTotal->total_price_gold = $payableTotalGoldPercent*$deductionTotal->unit_price_gold;
+                    $deductionTotal->unit_price_gold = round(2204.62*$this->goldRefinement,3,PHP_ROUND_HALF_DOWN);
+                    $deductionTotal->total_price_gold = round($payableTotalGoldPercent*$deductionTotal->unit_price_gold,3,PHP_ROUND_HALF_DOWN);
 
                     $deductionTotal->maquila = $this->maquila;
                     $deductionTotal->analysis = $this->analysis/$law->tmns;
@@ -420,7 +420,7 @@ class SettleModal extends Component
                     $penaltyTotal->leftover_mercury = $this->mercuryPenalty - $this->mercuryMaximum > 0 ? $this->mercuryPenalty - $this->mercuryMaximum : 0;
 
                     $penaltyTotal->total_arsenic = $penaltyTotal->leftover_arsenic*100;
-                    $penaltyTotal->total_antomony = $penaltyTotal->leftover_antomony*106.5;
+                    $penaltyTotal->total_antomony = round($penaltyTotal->leftover_antomony*106.5,3,PHP_ROUND_HALF_DOWN);
                     $penaltyTotal->total_lead = $penaltyTotal->leftover_lead*5;
                     $penaltyTotal->total_zinc = $penaltyTotal->leftover_zinc*5;
                     $penaltyTotal->total_bismuth = $penaltyTotal->leftover_bismuth*500;
@@ -442,7 +442,7 @@ class SettleModal extends Component
                ]);
             $this->open = false;
         }catch(\Exception $e){
-            $this->alert('error', 'No se pudo liquidar', [
+            $this->alert('error', $e, [
                 'position' => 'center',
                 'timer' => 100000,
                 'toast' => false,
@@ -453,15 +453,12 @@ class SettleModal extends Component
 
     public function createBatch(){
         $fecha = 'L'.Carbon::now()->isoFormat('YYMM');
+        $correlativo = '0001';
         if(Settlement::limit(1)->exists()){
             $last_batch = explode("-",Settlement::latest()->first()->batch);
-            if($fecha != $last_batch[0]){
-                $correlativo = '0001';
-            }else{
+            if($fecha == $last_batch[0]){
                 $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
             }
-        }else{
-            $correlativo = '0001';
         }
 
         return $fecha.'-'.$correlativo;

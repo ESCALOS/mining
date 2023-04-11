@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('requirements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('settlement_id')->constrained();
-            $table->unsignedDecimal('maquila',8,4);
-            $table->unsignedDecimal('analysis',8,4);
-            $table->unsignedDecimal('stevedore',8,4);
+            $table->unsignedDecimal('maquila',12,4);
+            $table->unsignedDecimal('analysis',12,4);
+            $table->unsignedDecimal('stevedore',12,4);
             $table->timestamps();
         });
     }
