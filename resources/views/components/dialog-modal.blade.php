@@ -6,7 +6,7 @@
             {{ $title }}
         </div>
 
-        <div class="mt-4 text-sm text-gray-600"  style="max-height: 440px;overflow-y:auto">
+        <div class="mt-4 text-sm"  style="max-height: 460px;overflow-y:auto">
             {{ $content }}
         </div>
     </div>

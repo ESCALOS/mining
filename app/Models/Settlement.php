@@ -50,4 +50,16 @@ class Settlement extends Model
     public function Order(){
         return $this->belongsTo(Order::class);
     }
+
+    public function PayableTotal(){
+        return $this->hasOne(PayableTotal::class);
+    }
+
+    public function DeductionTotal(){
+        return $this->hasOne(DeductionTotal::class);
+    }
+
+    public function PenaltyTotal(){
+        return $this->hasOne(PenaltyTotal::class);
+    }
 }

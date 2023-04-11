@@ -32,10 +32,13 @@ class Base extends Component
     }
 
     public function seleccionar($id) {
-        if(in_array($id,$this->settlementId)){
+        if(!in_array($id,$this->settlementId)){
             array_push($this->settlementId,$id);
+        }else{
+            array_splice($this->settlementId,array_search($id,$this->settlementId),1);
         }
     }
+
     public function render()
     {
         $this->boton_activo = $this->settlementId != [];

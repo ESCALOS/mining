@@ -76,7 +76,7 @@
                     </td>
                     <td class="py-3 text-center">
                         <div>
-                            <span class="p-2 font-medium text-white bg-blue-500 rounded-md">Ver detalles</span>
+                            <span class="p-2 font-medium text-white bg-blue-500 rounded-md" wire:click='$emitTo("settlement.detail-modal","showDetails",{{ $settlement->id }})"'>Ver detalles</span>
                         </div>
                     </td>
                 </tr>
@@ -98,5 +98,5 @@
             </h1>
         </div>
     </div>
-
+    @livewire('settlement.detail-modal')
 </div>
