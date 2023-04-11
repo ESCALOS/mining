@@ -165,11 +165,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($total_unit,3) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($batch_value,2) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($igv,2) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($detraccion,2) }}</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($total,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->unit_price,3) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->batch_price,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->igv,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->detraccion,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->total,2) }}</td>
                         </tr>
                     </tbody>
                 </table>
