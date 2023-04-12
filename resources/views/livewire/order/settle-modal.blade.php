@@ -149,21 +149,21 @@
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Decucción Cobre:</x-label>
+                                <x-label>Deducción Cobre:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="copperDeduction"/>
 
                                 <x-input-error for="copperDeduction"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Decucción Plata:</x-label>
+                                <x-label>Deducción Plata:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="silverDeduction"/>
 
                                 <x-input-error for="silverDeduction"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Decucción Oro:</x-label>
+                                <x-label>Deducción Oro:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="goldDeduction"/>
 
                                 <x-input-error for="goldDeduction"/>

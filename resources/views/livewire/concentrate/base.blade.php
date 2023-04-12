@@ -2,7 +2,7 @@
     <div class="grid items-center grid-cols-3 gap-4 p-6 bg-white">
         <x-boton-crud accion="$emitTo('concentrate.modal','abrirModal',0)" color="green">Registrar</x-boton-crud>
         <x-boton-crud accion="$emitTo('concentrate.modal','abrirModal',{{$concentrateId}})" color="amber" :activo="$boton_activo">Editar</x-boton-crud>
-        <x-boton-crud accion="anular" color="red" :activo="$boton_activo">Anular</x-boton-crud>
+        <x-boton-crud accion="anular" color="red" :activo="$boton_activo">Eliminar</x-boton-crud>
     </div>
 
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
