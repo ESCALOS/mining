@@ -28,7 +28,9 @@ class SettleModal extends Component
     use LivewireAlert;
 
     public $open;
+    public $open2;
     public $page;
+    public $settlementId;
     public $orderId;
     public $withInvoice;
     public $internationalCopper;
@@ -71,7 +73,9 @@ class SettleModal extends Component
 
     public function mount(){
         $this->open = false;
+        $this->open2 = false;
         $this->page = 1;
+        $this->settlementId = 0;
         $this->orderId = 0;
         $this->withInvoice = false;
         $this->internationalCopper = "";
@@ -115,9 +119,8 @@ class SettleModal extends Component
 
     protected $listeners = ['abrirModal','settle'];
 
-    public function abrirModal($id){
-
-        if(Order::find($id)->settled){
+    public function abrirModal($settlementId,$orderId){
+        if(Order::find($orderId)->settled && $settlementId == "0"){
             $this->alert('warning', '¡Orden ya liquidada!', [
                 'position' => 'top-right',
                 'timer' => 3500,
@@ -128,24 +131,65 @@ class SettleModal extends Component
             $this->resetValidation();
             $this->resetExcept('open');
             $this->page = 1;
-            $this->orderId = $id;
-            $this->silverFactor = 1.1023;
-            $this->goldFactor = 1.1023;
-            $this->arsenicPenalty = 0;
-            $this->antomonyPenalty = 0;
-            $this->leadPenalty = 0;
-            $this->zincPenalty = 0;
-            $this->bismuthPenalty = 0;
-            $this->mercuryPenalty = 0;
-            $this->arsenicMaximum = 0;
-            $this->antomonyMaximum = 0;
-            $this->leadMaximum = 0;
-            $this->zincMaximum = 0;
-            $this->bismuthMaximum = 0;
-            $this->mercuryMaximum = 0;
+            $this->settlementId = $settlementId;
+            $this->orderId = $orderId;
+            if($settlementId > 0){
+                $settlement = Settlement::find($settlementId);
+                $this->internationalCopper = floatval($settlement->InternationalPayment->copper);
+                $this->internationalSilver = floatval($settlement->InternationalPayment->silver);
+                $this->internationalGold = floatval($settlement->InternationalPayment->gold);
+                $this->copperLaw = floatval($settlement->Law->copper);
+                $this->humidity = floatval($settlement->Law->humidity);
+                $this->decrease = floatval($settlement->Law->decrease);
+                $this->silverLaw = floatval($settlement->Law->silver);
+                $this->silverFactor = floatval($settlement->Law->silver_factor);
+                $this->goldLaw = floatval($settlement->Law->gold);
+                $this->goldFactor = floatval($settlement->Law->gold_factor);
+                $this->copperPayable = floatval($settlement->PercentagePayable->copper);
+                $this->silverPayable = floatval($settlement->PercentagePayable->silver);
+                $this->goldPayable = floatval($settlement->PercentagePayable->gold);
+                $this->copperProtection = floatval($settlement->Protection->copper);
+                $this->silverProtection = floatval($settlement->Protection->silver);
+                $this->goldProtection = floatval($settlement->Protection->gold);
+                $this->copperDeduction = floatval($settlement->Deduction->copper);
+                $this->silverDeduction = floatval($settlement->Deduction->silver);
+                $this->goldDeduction = floatval($settlement->Deduction->gold);
+                $this->copperRefinement = floatval($settlement->Refinement->copper);
+                $this->silverRefinement = floatval($settlement->Refinement->silver);
+                $this->goldRefinement = floatval($settlement->Refinement->gold);
+                $this->maquila = floatval($settlement->Requirement->maquila);
+                $this->analysis = floatval($settlement->Requirement->analysis);
+                $this->stevedore = floatval($settlement->Requirement->stevedore);
+                $this->arsenicPenalty = number_format($settlement->Penalty->arsenic,3);
+                $this->antomonyPenalty = number_format($settlement->Penalty->antomony,3);
+                $this->leadPenalty = number_format($settlement->Penalty->lead,3);
+                $this->zincPenalty = number_format($settlement->Penalty->zinc,3);
+                $this->bismuthPenalty = number_format($settlement->Penalty->bismuth,3);
+                $this->mercuryPenalty = number_format($settlement->Penalty->mercury,3);
+                $this->arsenicMaximum = number_format($settlement->AllowedAmount->arsenic,3);
+                $this->antomonyMaximum = number_format($settlement->AllowedAmount->antomony,3);
+                $this->leadMaximum = number_format($settlement->AllowedAmount->lead,3);
+                $this->zincMaximum = number_format($settlement->AllowedAmount->zinc,3);
+                $this->bismuthMaximum = number_format($settlement->AllowedAmount->bismuth,3);
+                $this->mercuryMaximum = number_format($settlement->AllowedAmount->mercury,3);
+            }else{
+                $this->silverFactor = 1.1023;
+                $this->goldFactor = 1.1023;
+                $this->arsenicPenalty = 0;
+                $this->antomonyPenalty = 0;
+                $this->leadPenalty = 0;
+                $this->zincPenalty = 0;
+                $this->bismuthPenalty = 0;
+                $this->mercuryPenalty = 0;
+                $this->arsenicMaximum = 0;
+                $this->antomonyMaximum = 0;
+                $this->leadMaximum = 0;
+                $this->zincMaximum = 0;
+                $this->bismuthMaximum = 0;
+                $this->mercuryMaximum = 0;
+            }
             $this->open = true;
         }
-
     }
 
     protected function rules(){
@@ -271,56 +315,81 @@ class SettleModal extends Component
     }
 
     public function confirmSettle(){
-        if(Order::find($this->orderId)->settled){
+        $this->validate();
+        if(Order::find($this->orderId)->settled && $this->settlementId == "0"){
             $this->alert('warning', '¡Orden ya liquidada!', [
                 'position' => 'top-right',
                 'timer' => 2000,
                 'toast' => true,
             ]);
         }else{
-            $this->alert('question','¿Estas seguro de liquidar?',[
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'Sí',
+            $this->open2 = true;
+            $this->alert('info', '¡Verfirque los datos!', [
+                'text' => 'Presione regresar si desea corregir',
                 'position' => 'center',
+                'timer' => 5000,
                 'toast' => false,
-                'showCancelButton' => true,
-                'cancelButtonText' => 'No',
-                'timer' => 10000,
-                'onConfirmed' => 'settle',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
             ]);
-
         }
     }
 
     public function settle(){
-        $this->validate();
         try{
             DB::transaction(function(){
                     $order = Order::find($this->orderId);
                     $order->settled = true;
 
-                    $settlement = Settlement::create([
-                        'order_id' => $this->orderId,
-                        'batch' => $this->createBatch(),
-                        'with_invoice' => true,
-                        'user_id' => Auth::user()->id
-                    ]);
+                    if($this->settlementId == 0){
+                        $settlement = Settlement::create([
+                            'order_id' => $this->orderId,
+                            'batch' => $this->createBatch(),
+                            'with_invoice' => true,
+                            'user_id' => Auth::user()->id
+                        ]);
+                        $internationalPayment = new InternationalPayment();
+                        $percentagePayable = new PercentagePayable();
+                        $law = new Law();
+                        $protection = new Protection();
+                        $deduction = new Deduction();
+                        $refinement = new Refinement();
+                        $requirement = new Requirement();
+                        $penalty = new Penalty();
+                        $allowedAmount = new AllowedAmount();
+                        $payableTotal = new PayableTotal();
+                        $deductionTotal = new DeductionTotal();
+                        $penaltyTotal = new PenaltyTotal();
+                        $settlementTotal = new SettlementTotal();
+                    }else{
+                        $settlement = Settlement::find($this->settlementId);
+                        $internationalPayment = InternationalPayment::where('settlement_id',$this->settlementId)->first();
+                        $percentagePayable = PercentagePayable::where('settlement_id',$this->settlementId)->first();
+                        $law = Law::where('settlement_id',$this->settlementId)->first();
+                        $protection = Protection::where('settlement_id',$this->settlementId)->first();
+                        $deduction = Deduction::where('settlement_id',$this->settlementId)->first();
+                        $refinement = Refinement::where('settlement_id',$this->settlementId)->first();
+                        $requirement = Requirement::where('settlement_id',$this->settlementId)->first();
+                        $penalty = Penalty::where('settlement_id',$this->settlementId)->first();
+                        $allowedAmount = AllowedAmount::where('settlement_id',$this->settlementId)->first();
+                        $payableTotal = PayableTotal::where('settlement_id',$this->settlementId)->first();
+                        $deductionTotal = DeductionTotal::where('settlement_id',$this->settlementId)->first();
+                        $penaltyTotal = PenaltyTotal::where('settlement_id',$this->settlementId)->first();
+                        $settlementTotal = SettlementTotal::where('settlement_id',$this->settlementId)->first();
+                    }
 
-                    $internationalPayment = new InternationalPayment();
                     $internationalPayment->settlement_id = $settlement->id;
                     $internationalPayment->copper = $this->internationalCopper;
                     $internationalPayment->silver = $this->internationalSilver;
                     $internationalPayment->gold = $this->internationalGold;
                     $internationalPayment->save();
 
-                    $percentagePayable = new PercentagePayable();
                     $percentagePayable->settlement_id = $settlement->id;
                     $percentagePayable->copper = $this->copperPayable;
                     $percentagePayable->silver = $this->silverPayable;
                     $percentagePayable->gold = $this->goldPayable;
                     $percentagePayable->save();
 
-                    $law = new Law();
                     $law->settlement_id = $settlement->id;
                     $law->copper = $this->copperLaw;
                     $law->humidity = $this->humidity;
@@ -332,35 +401,30 @@ class SettleModal extends Component
                     $law->tms = $order->wmt*(100-$this->humidity)/100;
                     $law->tmns = $law->tms*(100-$law->decrease)/100;
 
-                    $protection = new Protection();
                     $protection->settlement_id = $settlement->id;
                     $protection->copper = $this->copperProtection;
                     $protection->silver = $this->silverProtection;
                     $protection->gold = $this->goldProtection;
                     $protection->save();
 
-                    $deduction = new Deduction();
                     $deduction->settlement_id = $settlement->id;
                     $deduction->copper = $this->copperDeduction;
                     $deduction->silver = $this->silverDeduction;
                     $deduction->gold = $this->goldDeduction;
                     $deduction->save();
 
-                    $refinement = new Refinement();
                     $refinement->settlement_id = $settlement->id;
                     $refinement->copper = $this->copperRefinement;
                     $refinement->silver = $this->silverRefinement;
                     $refinement->gold = $this->goldRefinement;
                     $refinement->save();
 
-                    $requirement = new Requirement();
                     $requirement->settlement_id = $settlement->id;
                     $requirement->maquila = $this->maquila;
                     $requirement->analysis = $this->analysis;
                     $requirement->stevedore = $this->stevedore;
                     $requirement->save();
 
-                    $penalty = new Penalty();
                     $penalty->settlement_id = $settlement->id;
                     $penalty->arsenic = $this->arsenicPenalty;
                     $penalty->antomony = $this->antomonyPenalty;
@@ -370,7 +434,6 @@ class SettleModal extends Component
                     $penalty->mercury = $this->mercuryPenalty;
                     $penalty->save();
 
-                    $allowedAmount = new AllowedAmount();
                     $allowedAmount->settlement_id = $settlement->id;
                     $allowedAmount->arsenic = $this->arsenicMaximum;
                     $allowedAmount->antomony = $this->antomonyMaximum;
@@ -379,7 +442,6 @@ class SettleModal extends Component
                     $allowedAmount->bismuth = $this->bismuthMaximum;
                     $allowedAmount->mercury = $this->mercuryMaximum;
 
-                    $payableTotal = new PayableTotal();
                     $payableTotal->settlement_id = $settlement->id;
 
                     $payableTotalCopperPercent = ($this->copperLaw/100*$this->copperPayable/100-$this->copperDeduction/100);
@@ -394,7 +456,6 @@ class SettleModal extends Component
                     $payableTotal->unit_price_gold =floor(($this->internationalGold - $this->goldProtection)*100)/100;
                     $payableTotal->total_price_gold =floor(($payableTotal->unit_price_gold*$payableTotalGoldPercent)*1000)/1000;
 
-                    $deductionTotal = new DeductionTotal();
                     $deductionTotal->settlement_id = $settlement->id;
 
                     $deductionTotal->unit_price_copper = floor(2204.62*$this->copperRefinement*10000)/10000;
@@ -410,7 +471,6 @@ class SettleModal extends Component
                     $deductionTotal->analysis = $this->analysis/$law->tmns;
                     $deductionTotal->stevedore = $this->stevedore*$order->wmt;
 
-                    $penaltyTotal = new PenaltyTotal();
                     $penaltyTotal->settlement_id = $settlement->id;
 
                     $penaltyTotal->leftover_arsenic = $this->arsenicPenalty - $this->arsenicMaximum > 0 ? $this->arsenicPenalty - $this->arsenicMaximum : 0;
@@ -427,7 +487,6 @@ class SettleModal extends Component
                     $penaltyTotal->total_bismuth = $penaltyTotal->leftover_bismuth*500;
                     $penaltyTotal->total_mercury = $penaltyTotal->leftover_mercury/2;
 
-                    $settlementTotal = new SettlementTotal();
                     $settlementTotal->settlement_id = $settlement->id;
 
                     $settlementTotal->payable_total = $payableTotal->total_price_copper+$payableTotal->total_price_silver+$payableTotal->total_price_gold;
@@ -456,10 +515,11 @@ class SettleModal extends Component
                 'toast' => true,
                ]);
             $this->open = false;
+            $this->open2 = false;
         }catch(\Exception $e){
-            $this->alert('error', $e, [
+            $this->alert('error', 'Verifica tu conexión a internet y actualiza la pagina', [
                 'position' => 'center',
-                'timer' => 100000,
+                'timer' => 5000,
                 'toast' => false,
                ]);
         }

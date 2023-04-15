@@ -1,6 +1,6 @@
 <div class="w-full">
     <div class="grid items-center grid-cols-1 gap-4 p-6 bg-white sm:grid-cols-1">
-        <x-boton-crud accion="bleending" color="gray" :activo="$boton_activo">Bleeding</x-boton-crud>
+        <x-boton-crud accion="blending" color="gray" :activo="$boton_activo">Blending</x-boton-crud>
     </div>
 
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -23,15 +23,12 @@
                     <span class="block">TMH</span>
                 </th>
                 <th class="py-3 text-center">
-                    <span class="block">TMS</span>
-                </th>
-                <th class="py-3 text-center">
                     <span class="block">TMNS</span>
                 </th>
                 <th class="py-3 text-center">
                     <span class="block">Nombre o Razón Social</span>
                 </th>
-                <th class="py-3 text-center">
+                <th class="py-3 text-center" style="width:150px">
                     <span class="block">Acciones</span>
                 </th>
             </tr>
@@ -51,17 +48,12 @@
                     </td>
                     <td class="py-3 text-center">
                         <div>
-                            <span class="font-medium">{{ $settlement->Order->Concentrate->concentrate }}</span>
+                            <span class="font-medium">{{ $settlement->concentrate }}</span>
                         </div>
                     </td>
                     <td class="py-3 text-center">
                         <div>
-                            <span class="font-medium">{{ number_format($settlement->Order->wmt,3) }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 text-center">
-                        <div>
-                            <span class="font-medium">{{ number_format($settlement->Law->tms,3) }}</span>
+                            <span class="font-medium">{{ number_format($settlement->wmt,3) }}</span>
                         </div>
                     </td>
                     <td class="py-3 text-center">
@@ -71,12 +63,17 @@
                     </td>
                     <td class="py-3 text-center">
                         <div>
-                            <span class="font-medium">{{ $settlement->Order->Client->name }}</span>
+                            <span class="font-medium">{{ $settlement->name }}</span>
                         </div>
                     </td>
                     <td class="py-3 text-center">
-                        <div>
-                            <span class="p-2 font-medium text-white bg-blue-500 rounded-md" wire:click='$emitTo("settlement.detail-modal","showDetails",{{ $settlement->id }})"'>Ver detalles</span>
+                        <div class="grid grid-cols-2 mx-auto text-center">
+                            <div class="w-10 h-10 mx-auto" wire:click='$emitTo("order.settle-modal","abrirModal",{{ $settlement->id }},{{ $settlement->order_id }})'>
+                                <x-icons.pencil :size="10" : class="p-2 font-medium text-center text-white rounded-md bg-amber-500"/>
+                            </div>
+                            <div class="w-10 h-10 mx-auto" wire:click='$emitTo("settlement.detail-modal","showDetails",{{ $settlement->id }})'>
+                                <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -99,4 +96,6 @@
         </div>
     </div>
     @livewire('settlement.detail-modal')
+    @livewire('settlement.blending-modal')
+    @livewire('order.settle-modal')
 </div>

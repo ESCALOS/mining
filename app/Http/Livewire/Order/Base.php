@@ -28,7 +28,7 @@ class Base extends Component
         $this->orderId = $id;
     }
 
-    public function anular(){
+    public function eliminar(){
         if(Order::find($this->orderId)->settled){
             $this->alert('warning', '¡No se puede eliminar la orden!', [
                 'position' => 'top-right',

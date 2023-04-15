@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DispatchDetail extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }

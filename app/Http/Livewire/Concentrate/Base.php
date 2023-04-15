@@ -28,7 +28,7 @@ class Base extends Component
         $this->concentrateId = $id;
     }
 
-    public function anular(){
+    public function eliminar(){
         if(Concentrate::has('orders')->where('id',$this->concentrateId)->exists()){
             $this->alert('warning', '¡No se puede eliminar el concentrado!', [
                 'position' => 'top-right',

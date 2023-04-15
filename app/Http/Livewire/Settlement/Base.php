@@ -27,7 +27,10 @@ class Base extends Component
     public function getSettlements(){
         $settlements = Settlement::when($this->search != "", function($q){
             return $q->where('batch','like','%'.$this->search.'%');
-        })->latest()->paginate(6);
+        })->join('orders','orders.id','settlements.order_id')
+        ->join('entities','entities.id','orders.client_id')
+        ->join('concentrates','concentrates.id','orders.concentrate_id')
+        ->whereColumn('settlements.wmt_shipped','<>','orders.wmt')->select('settlements.id','settlements.batch','concentrates.concentrate','settlements.order_id','orders.wmt','entities.name')->orderBy('id','DESC')->paginate(6);
         return $settlements;
     }
 
@@ -36,6 +39,18 @@ class Base extends Component
             array_push($this->settlementId,$id);
         }else{
             array_splice($this->settlementId,array_search($id,$this->settlementId),1);
+        }
+    }
+
+    public function blending(){
+        if($this->settlementId != []){
+            $this->emitTo('settlement.blending-modal','abrirModal',$this->settlementId);
+        }else{
+            $this->alert('warning', '¡No ha seleccionado ninguna liquidación!', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
         }
     }
 
