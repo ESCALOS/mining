@@ -68,10 +68,10 @@
                     </td>
                     <td class="py-3 text-center">
                         <div class="grid grid-cols-2 mx-auto text-center">
-                            <div class="w-10 h-10 mx-auto" wire:click='$emitTo("order.settle-modal","abrirModal",{{ $settlement->id }},{{ $settlement->order_id }})'>
+                            <div title="Editar" class="w-10 h-10 mx-auto" wire:click='$emitTo("order.settle-modal","abrirModal",{{ $settlement->id }},{{ $settlement->order_id }})'>
                                 <x-icons.pencil :size="10" : class="p-2 font-medium text-center text-white rounded-md bg-amber-500"/>
                             </div>
-                            <div class="w-10 h-10 mx-auto" wire:click='$emitTo("settlement.detail-modal","showDetails",{{ $settlement->id }})'>
+                            <div title="Ver detalles" class="w-10 h-10 mx-auto" wire:click='$emitTo("settlement.detail-modal","showDetails",{{ $settlement->id }})'>
                                 <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
                             </div>
                         </div>

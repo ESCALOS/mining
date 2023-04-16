@@ -16,29 +16,20 @@
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>Lote:</x-label>
                 <x-input type="text" style="height:40px;width: 100%" wire:model="batch.{{ $key }}" disabled/>
-
-                <x-input-error for="batch.{{ $key }}"/>
-
             </div>
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>Concentrado:</x-label>
                 <x-input type="text" style="height:40px;width: 100%" wire:model="concentrate.{{ $key }}" disabled/>
-
-                <x-input-error for="concentrate.{{ $key }}"/>
 
             </div>
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>TMH:</x-label>
                 <x-input type="number" style="height:40px;width: 100%" wire:model="wmt.{{ $key }}" disabled/>
 
-                <x-input-error for="wmt.{{ $key }}"/>
-
             </div>
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>TMH Faltante:</x-label>
                 <x-input type="number" style="height:40px;width: 100%" wire:model="missingWmt.{{ $key }}" disabled/>
-
-                <x-input-error for="missingWmt.{{ $key }}"/>
 
             </div>
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">

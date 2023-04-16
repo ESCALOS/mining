@@ -18,7 +18,7 @@
                     </x-nav-link>
                     @endif
                     @if (Auth::user()->hasRole('administrador'))
-                    <x-nav-link href="{{ route('administrador.concentrate') }}" :active="request()->routeIs('administrador.concentrate')">
+                    <x-nav-link href="{{ route('administrador.concentrates') }}" :active="request()->routeIs('administrador.concentrates')">
                         Concentrados
                     </x-nav-link>
                     <x-nav-link href="{{ route('administrador.orders') }}" :active="request()->routeIs('administrador.orders')">
@@ -26,6 +26,9 @@
                     </x-nav-link>
                     <x-nav-link href="{{ route('administrador.settlements') }}" :active="request()->routeIs('administrador.settlements')">
                         Liquidaciones
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('administrador.dispatches') }}" :active="request()->routeIs('administrador.dispatches')">
+                        Despacho
                     </x-nav-link>
                     @endif
 
