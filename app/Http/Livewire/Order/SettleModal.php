@@ -189,6 +189,11 @@ class SettleModal extends Component
                 $this->mercuryMaximum = 0;
             }
             $this->open = true;
+            $this->alert('success', '¡Datos Cargados!', [
+                'position' => 'center',
+                'timer' => 750,
+                'toast' => false,
+            ]);
         }
     }
 
@@ -331,6 +336,7 @@ class SettleModal extends Component
                 'toast' => false,
                 'showConfirmButton' => true,
                 'confirmButtonText' => 'OK',
+                'onConfirmed' => ''
             ]);
         }
     }
@@ -508,12 +514,14 @@ class SettleModal extends Component
                     $deductionTotal->save();
                     $settlementTotal->save();
             });
-            $this->emitTo('order.base', 'render');
+
+
             $this->alert('success', 'Orden Liquidada', [
                 'position' => 'top-right',
                 'timer' => 3500,
                 'toast' => true,
                ]);
+            $this->emit('render');
             $this->open = false;
             $this->open2 = false;
         }catch(\Exception $e){

@@ -42,6 +42,15 @@ class Base extends Component
         }
     }
 
+    public function abrirSettleModal($settlement,$order){
+        $this->alert('info', '¡Cargando...!', [
+            'position' => 'center',
+            'timer' => null,
+            'toast' => false,
+        ]);
+        $this->emitTo('order.settle-modal','abrirModal',$settlement,$order);
+    }
+
     public function blending(){
         if($this->settlementId != []){
             $this->emitTo('settlement.blending-modal','abrirModal',$this->settlementId);

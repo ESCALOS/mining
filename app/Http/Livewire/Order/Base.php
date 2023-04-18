@@ -54,7 +54,7 @@ class Base extends Component
     public function anuladoConfirmado() {
         Order::find($this->orderId)->delete();
         $this->orderId = 0;
-        $this->alert('success', '¡Concentrado Eliminado!', [
+        $this->alert('success', '¡Orden Eliminada!', [
             'position' => 'top-right',
             'timer' => 2000,
             'toast' => true,
