@@ -475,7 +475,7 @@ class SettleModal extends Component
 
                     $deductionTotal->maquila = $this->maquila;
                     $deductionTotal->analysis = $this->analysis/$law->tmns;
-                    $deductionTotal->stevedore = $this->stevedore*$order->wmt;
+                    $deductionTotal->stevedore = $this->stevedore/$order->wmt;
 
                     $penaltyTotal->settlement_id = $settlement->id;
 
@@ -504,7 +504,6 @@ class SettleModal extends Component
                     $settlementTotal->detraccion = ($settlementTotal->batch_price+$settlementTotal->igv)*0.1;
                     $settlementTotal->total = $settlementTotal->batch_price+$settlementTotal->igv-$settlementTotal->detraccion;
 
-
                     $penaltyTotal->save();
 
                     $law->save();
@@ -514,7 +513,6 @@ class SettleModal extends Component
                     $deductionTotal->save();
                     $settlementTotal->save();
             });
-
 
             $this->alert('success', 'Orden Liquidada', [
                 'position' => 'top-right',
@@ -531,7 +529,6 @@ class SettleModal extends Component
                 'toast' => false,
                ]);
         }
-
     }
 
     public function createBatch(){

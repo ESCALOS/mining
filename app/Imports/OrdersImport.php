@@ -160,7 +160,7 @@ class OrdersImport implements OnEachRow,WithHeadingRow
 
                 $deductionTotal->maquila = $row['maquila'];
                 $deductionTotal->analysis = $row['analisis']/$law->tmns;
-                $deductionTotal->stevedore = $row['estibadores']*$order->wmt;
+                $deductionTotal->stevedore = $row['estibadores']/$order->wmt;
 
                 $penaltyTotal->settlement_id = $settlement->id;
 
