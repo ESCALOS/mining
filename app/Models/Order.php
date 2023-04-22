@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function Client(){
         return $this->belongsTo(Entity::class,'client_id');
     }

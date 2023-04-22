@@ -31,13 +31,8 @@
                         </div>
                     </td>
                     <td class="py-3 text-center">
-                        <div class="grid grid-cols-2 mx-auto text-center">
-                            <div title="Ver detalles" class="w-10 h-10 mx-auto" wire:click="$emit('abrirModal',{{ $dispatch->id }})">
-                                <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
-                            </div>
-                            <div title="Enviar" class="w-10 h-10 mx-auto" wire:click="confirmShip({{ $dispatch->id }})">
-                                <x-icons.arrow-right :size="10" : class="p-2 font-medium text-center text-white bg-green-500 rounded-md"/>
-                            </div>
+                        <div title="Ver detalles" class="w-10 h-10 mx-auto" wire:click="$emit('abrirModal',{{ $dispatch->id }})">
+                            <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
                         </div>
                     </td>
                 </tr>

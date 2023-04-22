@@ -9,6 +9,8 @@ class Concentrate extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['concentrate','chemical_symbol'];
+
     public function Orders(){
         return $this->hasMany(Order::class);
     }

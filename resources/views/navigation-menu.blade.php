@@ -30,6 +30,9 @@
                     <x-nav-link href="{{ route('administrador.dispatches') }}" :active="request()->routeIs('administrador.dispatches')">
                         Despacho
                     </x-nav-link>
+                    <x-nav-link href="{{ route('administrador.sent') }}" :active="request()->routeIs('administrador.sent')">
+                        Enviados
+                    </x-nav-link>
                     @endif
 
                 </div>
@@ -154,8 +157,20 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link href="{{ route('administrador.concentrates') }}" :active="request()->routeIs('administrador.concentrates')">
+                Concentrados
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('administrador.orders') }}" :active="request()->routeIs('administrador.orders')">
+                Órdenes
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('administrador.settlements') }}" :active="request()->routeIs('administrador.settlements')">
+                Liquidaciones
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('administrador.dispatches') }}" :active="request()->routeIs('administrador.dispatches')">
+                Despacho
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('administrador.sent') }}" :active="request()->routeIs('administrador.sent')">
+                Enviados
             </x-responsive-nav-link>
         </div>
 

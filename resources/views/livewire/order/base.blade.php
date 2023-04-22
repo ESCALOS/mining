@@ -1,9 +1,10 @@
 <div class="w-full">
-    <div class="grid items-center grid-cols-4 gap-4 p-6 bg-white">
+    <div class="grid items-center grid-cols-5 gap-4 p-6 bg-white">
         <x-boton-crud accion="$emitTo('order.modal','abrirModal',0)" color="green">Registrar</x-boton-crud>
         <x-boton-crud accion="$emitTo('order.modal','abrirModal',{{$orderId}})" color="amber" :activo="$boton_activo">Editar</x-boton-crud>
         <x-boton-crud accion="eliminar" color="red" :activo="$boton_activo">Eliminar</x-boton-crud>
         <x-boton-crud accion="$emitTo('order.settle-modal','abrirModal',0,{{$orderId}})" color="blue" :activo="$boton_activo">Liquidar</x-boton-crud>
+        <x-boton-crud accion="$emitTo('order.import-modal','abrirModal')" color="gray">Importar</x-boton-crud>
     </div>
 
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -77,6 +78,6 @@
             </h1>
         </div>
     </div>
-    @livewire('order.modal')
-    @livewire('order.settle-modal')
+    <livewire:order.modal :wire:key="1">
+    <livewire:order.settle-modal :wire:key="2">
 </div>

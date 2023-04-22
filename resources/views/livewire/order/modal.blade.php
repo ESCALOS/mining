@@ -1,5 +1,5 @@
 <div>
-    <x-dialog-modal wire:model='open' maxWidth="screen" >
+    <x-dialog-modal wire:model='open' maxWidth="screen">
         <x-slot name="title">
             Registrar Órdenes
         </x-slot>
@@ -135,4 +135,5 @@
             </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
+    <livewire:order.import-modal :wire:key="3">
 </div>

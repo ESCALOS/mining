@@ -52,7 +52,7 @@ class Base extends Component
     public function getDispatches(){
         $dispatches = Dispatch::when($this->search != "", function($q){
             return $q->where('batch','like','%'.$this->search.'%');
-        })->withSum('details','wmt')->latest()->paginate(6);
+        })->withSum('details','wmt')->where('shipped',0)->latest()->paginate(6);
         return $dispatches;
     }
 
