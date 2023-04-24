@@ -11,6 +11,12 @@ class DetailModal extends Component
     public $open;
     public $dispatchId;
     public $shipped;
+    public $wmt_total;
+    public $amount_total;
+    public $dnwmt_total;
+    public $copper_total;
+    public $silver_total;
+    public $gold_total;
 
     protected $listeners = ['abrirModal','cerrarModal'];
 
@@ -18,6 +24,12 @@ class DetailModal extends Component
         $this->open = false;
         $this->dispatchId = 0;
         $this->shipped = true;
+        $this->wmt_total = 0;
+        $this->amount_total = 0;
+        $this->dnwmt_total = 0;
+        $this->copper_total = 0;
+        $this->silver_total = 0;
+        $this->gold_total = 0;
     }
 
     public function abrirModal($id){
