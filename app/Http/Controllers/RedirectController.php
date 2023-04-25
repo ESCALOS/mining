@@ -14,6 +14,8 @@ class RedirectController extends Controller
             $user = User::find(auth()->user()->id);
             if($user->hasRole('administrador')){
                 return redirect()->route('administrador.orders');
+            }else if($user->hasRole('colaborador')){
+                return redirect()->route('colaborador.orders');
             }else{
                 return view('dashboard');
             }
