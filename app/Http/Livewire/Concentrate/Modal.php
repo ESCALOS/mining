@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Concentrate;
 use App\Models\Concentrate;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use GuzzleHttp\Client;
 
 class Modal extends Component
 {

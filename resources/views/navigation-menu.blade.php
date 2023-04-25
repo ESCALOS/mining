@@ -33,6 +33,9 @@
                     <x-nav-link href="{{ route('administrador.sent') }}" :active="request()->routeIs('administrador.sent')">
                         Enviados
                     </x-nav-link>
+                    <x-nav-link href="{{ route('administrador.users') }}" :active="request()->routeIs('administrador.users')">
+                        Usuarios
+                    </x-nav-link>
                     @endif
 
                 </div>

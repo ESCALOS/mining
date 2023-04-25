@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
             'current_team_id' => null,
         ]);
         $role = \Spatie\Permission\Models\Role::create(['name' => 'administrador']);
+        $role2 = \Spatie\Permission\Models\Role::create(['name' => 'colaborador']);
         $user->assignRole($role);
         $user2->assignRole($role);
         $user3->assignRole($role);
