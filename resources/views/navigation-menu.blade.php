@@ -24,6 +24,9 @@
                     <x-nav-link href="{{ route('administrador.orders') }}" :active="request()->routeIs('administrador.orders')">
                         Órdenes
                     </x-nav-link>
+                    <x-nav-link href="{{ route('administrador.blenginds') }}" :active="request()->routeIs('administrador.blenginds')">
+                        Blending
+                    </x-nav-link>
                     <x-nav-link href="{{ route('administrador.settlements') }}" :active="request()->routeIs('administrador.settlements')">
                         Liquidaciones
                     </x-nav-link>
@@ -172,6 +175,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('administrador.orders') }}" :active="request()->routeIs('administrador.orders')">
                 Órdenes
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('administrador.blendings') }}" :active="request()->routeIs('administrador.blendings')">
+                Blending
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('administrador.settlements') }}" :active="request()->routeIs('administrador.settlements')">
                 Liquidaciones
