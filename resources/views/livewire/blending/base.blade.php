@@ -95,7 +95,7 @@
             </h1>
         </div>
     </div>
-    @livewire('blending.detail-modal')
+    @livewire('settlement.detail-modal')
     @livewire('blending.blending-modal')
     @livewire('order.settle-modal')
 </div>

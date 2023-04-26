@@ -1,8 +1,4 @@
 <div class="w-full">
-    <div class="grid items-center grid-cols-1 gap-4 p-6 bg-white sm:grid-cols-1">
-        <x-boton-crud accion="blending" color="gray" :activo="$boton_activo">Blending</x-boton-crud>
-    </div>
-
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
         <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
     </div>
@@ -10,9 +6,6 @@
     <table class="w-full overflow-x-scroll table-fixed" wire:loading.remove wire:target='getSettlements'>
         <thead>
             <tr class="text-sm leading-normal text-gray-600 uppercase bg-gray-200">
-                <th class="py-3 text-center" width="20px">
-                    <span class="block"></span>
-                </th>
                 <th class="py-3 text-center">
                     <span class="block">Lote</span>
                 </th>
@@ -36,11 +29,6 @@
         <tbody class="text-sm font-light text-gray-600">
             @foreach ($settlements as $settlement)
                 <tr style="cursor:pointer" class="border-b {{ $settlement->id == $settlementId ? 'bg-blue-200' : '' }} border-gray-200">
-                    <td class="py-3 text-center">
-                        <div class="flex items-center h-5">
-                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 ml-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:click="seleccionar({{$settlement->id}})">
-                        </div>
-                    </td>
                     <td class="py-3 text-center">
                         <div>
                             <span class="font-medium">{{ $settlement->batch }}</span>
@@ -96,6 +84,5 @@
         </div>
     </div>
     @livewire('settlement.detail-modal')
-    @livewire('settlement.blending-modal')
     @livewire('order.settle-modal')
 </div>

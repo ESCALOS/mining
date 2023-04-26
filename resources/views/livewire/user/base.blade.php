@@ -2,7 +2,7 @@
     <div class="grid items-center grid-cols-3 gap-4 p-6 bg-white">
         <x-boton-crud accion="$emitTo('user.modal','abrirModal',0)" color="green">Registrar</x-boton-crud>
         <x-boton-crud accion="$emitTo('user.modal','abrirModal',{{$userId}})" color="amber" :activo="$boton_activo">Editar</x-boton-crud>
-        <x-boton-crud accion="eliminar" color="red" :activo="$boton_activo">Eliminar</x-boton-crud>
+        <x-boton-crud accion="eliminar" color="red" :activo="$boton_activo">Activo/Inactivo</x-boton-crud>
     </div>
 
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -20,6 +20,9 @@
                 </th>
                 <th class="py-3 text-center">
                     <span class="block">Rol</span>
+                </th>
+                <th class="py-3 text-center">
+                    <span class="block">Estado</span>
                 </th>
             </tr>
         </thead>
@@ -39,6 +42,11 @@
                     <td class="py-3 text-center">
                         <div>
                             <span class="font-medium">{{ strtoupper($user->roles[0]->name) }}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 text-center">
+                        <div>
+                            <x-badge color="{{ $user->is_active ? 'green' : 'red' }}">{{ $user->is_active ? 'Activo' : 'Inactivo' }}</x-badge>
                         </div>
                     </td>
                 </tr>

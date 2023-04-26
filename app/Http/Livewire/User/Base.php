@@ -35,6 +35,12 @@ class Base extends Component
         return $users;
     }
 
+    public function eliminar(){
+        $user = User::find($this->userId);
+        $user->is_active = !$user->is_active;
+        $user->save();
+    }
+
     public function render()
     {
         $this->boton_activo = $this->userId > 0;

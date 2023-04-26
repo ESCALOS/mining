@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Modal extends Component
@@ -46,6 +47,7 @@ class Modal extends Component
     public function abrirModal($id){
         $this->resetValidation();
         $this->reset('name','email');
+        $this->role = 2;
         $this->userId = $id;
         if($id > 0){
             $user = User::find($id);
@@ -53,8 +55,6 @@ class Modal extends Component
             $this->email = $user->email;
             $this->role = $user->roles[0]->name == "administrador" ? 1 : 2;
         }
-
-
         $this->open = true;
     }
 
@@ -65,6 +65,9 @@ class Modal extends Component
 
         }else{
             $user = new User();
+            $user->email_verified_at = now();
+            $user->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
+            $user->remember_token = Str::random(10);
         }
         $user->name = $this->name;
         $user->email = $this->email;

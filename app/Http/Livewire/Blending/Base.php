@@ -53,7 +53,7 @@ class Base extends Component
 
     public function blending(){
         if($this->settlementId != []){
-            $this->emitTo('settlement.blending-modal','abrirModal',$this->settlementId);
+            $this->emitTo('blending.blending-modal','abrirModal',$this->settlementId);
         }else{
             $this->alert('warning', '¡No ha seleccionado ninguna liquidación!', [
                 'position' => 'top-right',
