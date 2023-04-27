@@ -17,6 +17,12 @@ class DetailModal extends Component
     public $copper_total;
     public $silver_total;
     public $gold_total;
+    public $arsenic_total;
+    public $antomony_total;
+    public $lead_total;
+    public $zinc_total;
+    public $bismuth_total;
+    public $mercury_total;
 
     protected $listeners = ['abrirModal','cerrarModal'];
 
@@ -30,6 +36,12 @@ class DetailModal extends Component
         $this->copper_total = 0;
         $this->silver_total = 0;
         $this->gold_total = 0;
+        $this->arsenic_total = 0;
+        $this->antomony_total = 0;
+        $this->lead_total = 0;
+        $this->zinc_total = 0;
+        $this->bismuth_total = 0;
+        $this->mercury_total = 0;
     }
 
     public function abrirModal($id){

@@ -17,6 +17,12 @@
                $copper_total += $dnwmt*$dispatchDetail->Settlement->Law->copper;
                $silver_total += $dnwmt*$dispatchDetail->Settlement->Law->silver;
                $gold_total += $dnwmt*$dispatchDetail->Settlement->Law->gold;
+               $arsenic_total += $dnwmt*$dispatchDetail->Settlement->Penalty->arsenic;
+               $antomony_total += $dnwmt*$dispatchDetail->Settlement->Penalty->antomony;
+               $lead_total += $dnwmt*$dispatchDetail->Settlement->Penalty->lead;
+               $zinc_total += $dnwmt*$dispatchDetail->Settlement->Penalty->zinc;
+               $bismuth_total += $dnwmt*$dispatchDetail->Settlement->Penalty->bismuth;
+               $mercury_total += $dnwmt*$dispatchDetail->Settlement->Penalty->mercury;
             @endphp
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>Lote:</x-label>
@@ -64,8 +70,39 @@
                 </div>
             </div>
         </div>
+        <div id="Promedio de Penalidades">
+            <div class="w-full py-2 mt-4 bg-red-600">
+                <h1 class="text-lg text-center text-white">Promedio de Penalidades</h1>
+            </div>
+            <div class="grid grid-cols-6 mt-2">
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>Arsenico:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($arsenic_total/$dnwmt_total,3) }}"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>Plata:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($antomony_total/$dnwmt_total,3) }}"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>Oro:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($lead_total/$dnwmt_total,3) }}"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>Plata:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($zinc_total/$dnwmt_total,3) }}"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>Oro:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($bismuth_total/$dnwmt_total,3) }}"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>Oro:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($mercury_total/$dnwmt_total,3) }}"/>
+                </div>
+            </div>
+        </div>
         <div id="Total">
-            <div class="w-full py-2 mt-4 bg-amber-600">
+            <div class="w-full py-2 mt-4 bg-green-600">
                 <h1 class="text-lg text-center text-white">Total</h1>
             </div>
             <div class="grid grid-cols-3 mt-2">
