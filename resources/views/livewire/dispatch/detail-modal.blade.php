@@ -10,7 +10,7 @@
                $factor = $dispatchDetail->Settlement->Law->tmns/$dispatchDetail->Settlement->Order->wmt;
                $wmt = round($dispatchDetail->wmt,3);
                $dnwmt = round($wmt*$factor,3);
-               $amount = round($dispatchDetail->Settlement->SettlementTotal->total*$wmt/$dispatchDetail->Settlement->Order->wmt,2);
+               $amount = round(($dispatchDetail->Settlement->SettlementTotal->batch_price+$dispatchDetail->Settlement->SettlementTotal->igv)*$wmt/$dispatchDetail->Settlement->Order->wmt,2);
                $wmt_total += $wmt;
                $amount_total += $amount;
                $dnwmt_total += $dnwmt;
