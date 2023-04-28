@@ -10,7 +10,17 @@
                         <div class="w-full py-2 bg-gray-600" >
                             <h1 class="text-lg text-center text-white">Precio Internacional</h1>
                         </div>
-                        <div class="grid grid-cols-3 mt-4">
+                        <div class="grid grid-cols-4 mt-4">
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Factura:</x-label>
+                                <select class="form-control" style="width: 100%" wire:model.defer='withInvoice'>
+                                    <option value="1">Sí</option>
+                                    <option value="0">No</option>
+                                </select>
+
+                                <x-input-error for="withInvoice"/>
+
+                            </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Cobre Internacional:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="internationalCopper"/>
@@ -226,7 +236,7 @@
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Antiminio:</x-label>
+                                <x-label>Antimonio:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyPenalty"/>
 
                                 <x-input-error for="antomonyPenalty"/>
@@ -275,7 +285,7 @@
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                                <x-label>Antiminio:</x-label>
+                                <x-label>Antimonio:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyMaximum"/>
 
                                 <x-input-error for="antomonyMaximum"/>

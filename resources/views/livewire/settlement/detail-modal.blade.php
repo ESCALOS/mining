@@ -29,7 +29,7 @@
                         </tr>
                         <tr>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">Ag Oz/TC</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->silver) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->silver*$settlement->Law->silver_factor) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->PercentagePayable->silver) }}%</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Deduction->silver) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_silver,3) }}</td>
@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">Au Oz/TC</td>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->gold) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Law->gold*$settlement->Law->gold_factor) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->PercentagePayable->gold) }}%</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">{{ floatval($settlement->Deduction->gold) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->PayableTotal->unit_price_gold,3) }}</td>
@@ -81,7 +81,7 @@
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->maquila,3) }}</td>
                         </tr>
                         <tr>
-                            <td style="border: 2px solid black;padding: 1rem;text-align: center">Ánalisis</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">Análisis</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->analysis,3) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->DeductionTotal->analysis,3) }}</td>
                         </tr>
@@ -160,6 +160,7 @@
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Total US$/TM</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Valor por Lote US$</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">IGV</th>
+                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Valor por Lote US$ + igv</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Detracción</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Total de liquidacion</th>
                     </thead>
@@ -168,6 +169,7 @@
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->unit_price,3) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->batch_price,2) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->igv,2) }}</td>
+                            <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->batch_price+$settlement->SettlementTotal->igv,2) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->detraccion,2) }}</td>
                             <td style="border: 2px solid black;padding: 1rem;text-align: center">$ {{ number_format($settlement->SettlementTotal->total,2) }}</td>
                         </tr>
@@ -178,6 +180,14 @@
 
         </x-slot>
         <x-slot name="footer">
+            <x-button class="ml-2" wire:loading.attr="disabled" wire:click="printSettlement">
+                <div wire:loading.remove>
+                    Imprimir
+                </div>
+                <div wire:loading.flex>
+                    Cargando...
+                </div>
+            </x-button>
             <x-secondary-button wire:click="$set('open',false)" class="ml-2">
                 Cerrar
             </x-secondary-button>

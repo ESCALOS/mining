@@ -37,7 +37,7 @@
                 </div>
                 <div class="grid grid-cols-3">
                     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                        <x-label>Concetrado:</x-label>
+                        <x-label>Concentrado:</x-label>
                         <select class="form-select" style="width: 100%" wire:model.defer='concentrateId'>
                             <option value="0">Seleccione una opción</option>
                             @foreach ($concentrates as $concentrate)
@@ -86,7 +86,7 @@
 
                     </div>
                     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                        <x-label>Guia de Transporte:</x-label>
+                        <x-label>Guía de Transporte:</x-label>
                         <x-input type="text" style="height:40px;width: 100%" wire:model.defer="transportGuide"/>
 
                         <x-input-error for="transportGuide"/>

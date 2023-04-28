@@ -32,6 +32,7 @@ class SettleModal extends Component
     public $page;
     public $settlementId;
     public $orderId;
+    public $batch;
     public $withInvoice;
     public $internationalCopper;
     public $internationalSilver;
@@ -77,6 +78,7 @@ class SettleModal extends Component
         $this->page = 1;
         $this->settlementId = 0;
         $this->orderId = 0;
+        $this->batch = "";
         $this->withInvoice = false;
         $this->internationalCopper = "";
         $this->internationalSilver = "";
@@ -135,6 +137,8 @@ class SettleModal extends Component
             $this->orderId = $orderId;
             if($settlementId > 0){
                 $settlement = Settlement::find($settlementId);
+                $this->batch = $settlement->batch;
+                $this->withInvoice = $settlement->with_invoice;
                 $this->internationalCopper = floatval($settlement->InternationalPayment->copper);
                 $this->internationalSilver = floatval($settlement->InternationalPayment->silver);
                 $this->internationalGold = floatval($settlement->InternationalPayment->gold);
@@ -173,6 +177,7 @@ class SettleModal extends Component
                 $this->bismuthMaximum = number_format($settlement->AllowedAmount->bismuth,3);
                 $this->mercuryMaximum = number_format($settlement->AllowedAmount->mercury,3);
             }else{
+                $this->withInvoice = 0;
                 $this->silverFactor = 1.1023;
                 $this->goldFactor = 1.1023;
                 $this->arsenicPenalty = 0;
@@ -351,7 +356,7 @@ class SettleModal extends Component
                         $settlement = Settlement::create([
                             'order_id' => $this->orderId,
                             'batch' => $this->createBatch(),
-                            'with_invoice' => true,
+                            'with_invoice' => $this->withInvoice,
                             'user_id' => Auth::user()->id
                         ]);
                         $internationalPayment = new InternationalPayment();
@@ -500,8 +505,8 @@ class SettleModal extends Component
                     $settlementTotal->penalty_total = $penaltyTotal->total_arsenic+$penaltyTotal->total_antomony+$penaltyTotal->total_lead+$penaltyTotal->total_zinc+$penaltyTotal->total_bismuth+$penaltyTotal->total_mercury;
                     $settlementTotal->unit_price = $settlementTotal->payable_total-$settlementTotal->deduction_total-$settlementTotal->penalty_total;
                     $settlementTotal->batch_price = $settlementTotal->unit_price*$law->tmns;
-                    $settlementTotal->igv = $settlementTotal->batch_price*0.18;
-                    $settlementTotal->detraccion = ($settlementTotal->batch_price+$settlementTotal->igv)*0.1;
+                    $settlementTotal->igv = $this->withInvoice == 1 ? $settlementTotal->batch_price*0.18 : 0;
+                    $settlementTotal->detraccion = $this->withInvoice == 1 ? ($settlementTotal->batch_price+$settlementTotal->igv)*0.1 : 0;
                     $settlementTotal->total = $settlementTotal->batch_price+$settlementTotal->igv-$settlementTotal->detraccion;
 
                     $penaltyTotal->save();
@@ -523,7 +528,7 @@ class SettleModal extends Component
             $this->open = false;
             $this->open2 = false;
         }catch(\Exception $e){
-            $this->alert('error', 'Verifica tu conexión a internet y actualiza la pagina', [
+            $this->alert('error', $e, [
                 'position' => 'center',
                 'timer' => 5000,
                 'toast' => false,
@@ -535,7 +540,7 @@ class SettleModal extends Component
         $fecha = 'L'.Carbon::now()->isoFormat('YYMM');
         $correlativo = '0001';
         if(Settlement::limit(1)->exists()){
-            $last_batch = explode("-",Settlement::latest()->first()->batch);
+            $last_batch = explode("-",Settlement::orderBy('batch','desc')->first()->batch);
             if($fecha == $last_batch[0]){
                 $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
             }

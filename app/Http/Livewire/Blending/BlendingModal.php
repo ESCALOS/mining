@@ -146,7 +146,7 @@ class BlendingModal extends Component
         $fecha = 'D'.Carbon::now()->isoFormat('YYMM');
         $correlativo = '0001';
         if(Dispatch::limit(1)->exists()){
-            $last_batch = explode("-",Dispatch::latest()->first()->batch);
+            $last_batch = explode("-",Dispatch::orderBy('batch','desc')->first()->batch);
             if($fecha == $last_batch[0]){
                 $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
             }

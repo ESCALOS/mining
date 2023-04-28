@@ -287,7 +287,7 @@ class Modal extends Component
         $fecha = 'O'.Carbon::now()->isoFormat('YYMM');
         $correlativo = '0001';
         if(Order::limit(1)->exists()){
-            $last_batch = explode("-",Order::latest()->first()->batch);
+            $last_batch = explode("-",Order::orderBy('batch','desc')->first()->batch);
             if($fecha == $last_batch[0]){
                 $correlativo = str_pad(strval(intval($last_batch[1])+1),4,0,STR_PAD_LEFT);
             }

@@ -4,12 +4,13 @@
             Detalle de blending
         </x-slot>
         <x-slot name="content">
-            <div class="grid grid-cols-1 sm:grid-cols-5">
+            <div class="grid grid-cols-1 sm:grid-cols-7">
             @foreach ($dispatchDetails as $dispatchDetail)
             @php
                $factor = $dispatchDetail->Settlement->Law->tmns/$dispatchDetail->Settlement->Order->wmt;
                $wmt = round($dispatchDetail->wmt,3);
                $dnwmt = round($wmt*$factor,3);
+               $igv = round($dispatchDetail->Settlement->SettlementTotal->igv*$wmt/$dispatchDetail->Settlement->Order->wmt,2);
                $amount = round(($dispatchDetail->Settlement->SettlementTotal->batch_price+$dispatchDetail->Settlement->SettlementTotal->igv)*$wmt/$dispatchDetail->Settlement->Order->wmt,2);
                $wmt_total += $wmt;
                $amount_total += $amount;
@@ -42,12 +43,18 @@
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>TMNS:</x-label>
                 <x-input type="text" style="height:40px;width: 100%" value="{{ number_format($dnwmt,3) }}" disabled/>
-
             </div>
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                <x-label>Monto:</x-label>
+                <x-label>Subtotal:</x-label>
+                <x-input type="text" style="height:40px;width: 100%" value="$ {{ number_format($amount-$igv,2) }}" disabled/>
+            </div>
+            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                <x-label>IGV:</x-label>
+                <x-input type="text" style="height:40px;width: 100%" value="$ {{ number_format($igv,2) }}" disabled/>
+            </div>
+            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                <x-label>Total:</x-label>
                 <x-input type="text" style="height:40px;width: 100%" value="$ {{ number_format($amount,2) }}" disabled/>
-
             </div>
             @endforeach
         </div>

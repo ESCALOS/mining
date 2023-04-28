@@ -1,7 +1,7 @@
 <div>
     <x-dialog-modal wire:model='open'>
         <x-slot name="title">
-            Registrar Concetrados
+            Registrar Concentrados
         </x-slot>
         <x-slot name="content">
             <div>
