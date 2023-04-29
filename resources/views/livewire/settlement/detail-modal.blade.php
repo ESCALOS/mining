@@ -160,7 +160,7 @@
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Total US$/TM</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Valor por Lote US$</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">IGV</th>
-                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Valor por Lote US$ + igv</th>
+                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Valor por Lote US$ + IGV</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Detracción</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Total de liquidacion</th>
                     </thead>
