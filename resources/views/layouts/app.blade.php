@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-        <link rel="icon" type="image/x-icon" href="/storage/img/logo.png">
+        <link rel="icon" type="image/x-icon" href="https://i.ibb.co/rdZCzBB/icon-innova-mining-company.jpg">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
