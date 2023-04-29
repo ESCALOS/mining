@@ -26,7 +26,7 @@ class Base extends Component
 
     public function getSettlements(){
         $settlements = Settlement::when($this->search != "", function($q){
-            return $q->where('batch','like','%'.$this->search.'%');
+            return $q->where('settlements.batch','like','%'.$this->search.'%')->orWhere('concentrates.concentrate','like','%'.$this->search.'%')->orWhere('entities.name','like','%'.$this->search.'%');
         })->join('orders','orders.id','settlements.order_id')
         ->join('entities','entities.id','orders.client_id')
         ->join('concentrates','concentrates.id','orders.concentrate_id')
