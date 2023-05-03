@@ -87,23 +87,23 @@
                     <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($arsenic_total/$dnwmt_total,3) }}"/>
                 </div>
                 <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                    <x-label>Plata:</x-label>
+                    <x-label>Antimonio:</x-label>
                     <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($antomony_total/$dnwmt_total,3) }}"/>
                 </div>
                 <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                    <x-label>Oro:</x-label>
+                    <x-label>Plomo:</x-label>
                     <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($lead_total/$dnwmt_total,3) }}"/>
                 </div>
                 <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                    <x-label>Plata:</x-label>
+                    <x-label>Zinc:</x-label>
                     <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($zinc_total/$dnwmt_total,3) }}"/>
                 </div>
                 <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                    <x-label>Oro:</x-label>
+                    <x-label>Bismuto:</x-label>
                     <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($bismuth_total/$dnwmt_total,3) }}"/>
                 </div>
                 <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-                    <x-label>Oro:</x-label>
+                    <x-label>Mercurio:</x-label>
                     <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $dnwmt_total == 0 ? 0 : number_format($mercury_total/$dnwmt_total,3) }}"/>
                 </div>
             </div>
@@ -129,10 +129,16 @@
         </div>
         </x-slot>
         <x-slot name="footer">
-            @if (!$shipped)
-            <x-button wire:loading.attr="disabled" wire:click="$emit('confirmShip',{{ $dispatchId }})">
-                Enviar
+            <x-button class="mr-2" wire:loading.attr="disabled" wire:click="printDispatch">
+                <div wire:loading.remove>
+                    Imprimir
+                </div>
+                <div wire:loading.flex>
+                    Cargando...
+                </div>
             </x-button>
+            @if (!$shipped)
+            <x-boton-crud wire:loading.attr="disabled" accion="$emit('confirmShip',{{ $dispatchId }})" color="green">Enviar</x-boton-crud>
             @endif
             <x-secondary-button wire:click="$set('open',false)" class="ml-2">
                 Cerrar

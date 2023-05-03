@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dispatch;
 use App\Models\Dispatch;
 use App\Models\DispatchDetail;
 use Livewire\Component;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DetailModal extends Component
 {
@@ -52,6 +53,24 @@ class DetailModal extends Component
 
     public function cerrarModal(){
         $this->open = false;
+    }
+
+    public function printDispatch(){
+
+        $dispatchDetails = DispatchDetail::where('dispatch_id',$this->dispatchId)->get();
+        $dispatch = Dispatch::find($this->dispatchId);
+        $data = [
+            'dispatchDetails' => $dispatchDetails,
+            'batch' => $dispatch->batch,
+            'shipped' => $dispatch->shipped,
+        ];
+        $titulo = "Despacho ".$dispatch->batch.'.pdf';
+        $pdfContent = PDF::loadView('livewire.dispatch.pdf.dispatch', $data)->setPaper('a4','portrait')->output();
+
+        return response()->streamDownload(
+            fn () => print($pdfContent),
+            $titulo
+        );
     }
 
     public function render()
