@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
 
-        /*$user = User::create([
+        $user = User::create([
             'name' => 'Carlos Escate Roman',
             'email' => 'stornblood6969@gmail.com',
             'email_verified_at' => now(),
@@ -49,11 +49,11 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
-        ]);*/
-        //$role = \Spatie\Permission\Models\Role::create(['name' => 'administrador']);
+        ]);
+        $role = \Spatie\Permission\Models\Role::create(['name' => 'administrador']);
         $role2 = \Spatie\Permission\Models\Role::create(['name' => 'colaborador']);
-        /*$user->assignRole($role);
+        $user->assignRole($role);
         $user2->assignRole($role);
-        $user3->assignRole($role);*/
+        $user3->assignRole($role);
     }
 }
