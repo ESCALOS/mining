@@ -455,16 +455,16 @@ class SettleModal extends Component
 
                     $payableTotal->settlement_id = $settlement->id;
 
-                    $payableTotalCopperPercent = ($this->copperLaw/100*$this->copperPayable/100-$this->copperDeduction/100);
-                    $payableTotal->unit_price_copper =floor((($this->internationalCopper - $this->copperProtection)*2204.62)*100)/100;
+                    $payableTotalCopperPercent = $this->copperLaw/100*$this->copperPayable/100-$this->copperDeduction/100;
+                    $payableTotal->unit_price_copper =floor((($this->internationalCopper - $this->copperProtection)*2204.62)*1000)/1000;
                     $payableTotal->total_price_copper =floor($payableTotal->unit_price_copper*$payableTotalCopperPercent*1000)/1000;
 
-                    $payableTotalSilverPercent = floor(($this->silverLaw*$this->silverFactor*$this->silverPayable/100-$this->silverDeduction)*1000)/1000;
+                    $payableTotalSilverPercent = $this->silverLaw*$this->silverFactor*$this->silverPayable/100-$this->silverDeduction;
                     $payableTotal->unit_price_silver =$this->internationalSilver - $this->silverProtection;
                     $payableTotal->total_price_silver =floor(($payableTotal->unit_price_silver*$payableTotalSilverPercent)*1000)/1000;
 
-                    $payableTotalGoldPercent = floor(($this->goldLaw*$this->goldFactor*$this->goldPayable/100-$this->goldDeduction)*100)/100;
-                    $payableTotal->unit_price_gold =floor(($this->internationalGold - $this->goldProtection)*100)/100;
+                    $payableTotalGoldPercent =$this->goldLaw*$this->goldFactor*$this->goldPayable/100-$this->goldDeduction;
+                    $payableTotal->unit_price_gold =$this->internationalGold - $this->goldProtection;
                     $payableTotal->total_price_gold =floor(($payableTotal->unit_price_gold*$payableTotalGoldPercent)*1000)/1000;
 
                     $deductionTotal->settlement_id = $settlement->id;
