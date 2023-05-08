@@ -158,7 +158,7 @@
                         </tr>
                         <tr>
                             <td>Ag Oz/TC</td>
-                            <td>{{ floatval($settlement->Law->silver*$settlement->Law->silver_factor) }}</td>
+                            <td>{{ floor($settlement->Law->silver*$settlement->Law->silver_factor*1000)/1000 }}</td>
                             <td>{{ floatval($settlement->PercentagePayable->silver) }}%</td>
                             <td>{{ floatval($settlement->Deduction->silver) }}</td>
                             <td>$ {{ number_format($settlement->PayableTotal->unit_price_silver,3) }}</td>
@@ -166,7 +166,7 @@
                         </tr>
                         <tr>
                             <td>Au Oz/TC</td>
-                            <td>{{ floatval($settlement->Law->gold*$settlement->Law->gold_factor) }}</td>
+                            <td>{{ floor($settlement->Law->gold*$settlement->Law->gold_factor*1000)/1000 }}</td>
                             <td>{{ floatval($settlement->PercentagePayable->gold) }}%</td>
                             <td>{{ floatval($settlement->Deduction->gold) }}</td>
                             <td>$ {{ number_format($settlement->PayableTotal->unit_price_gold,3) }}</td>
