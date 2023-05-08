@@ -459,11 +459,11 @@ class SettleModal extends Component
                     $payableTotal->unit_price_copper =floor((($this->internationalCopper - $this->copperProtection)*2204.62)*1000)/1000;
                     $payableTotal->total_price_copper =floor($payableTotal->unit_price_copper*$payableTotalCopperPercent*1000)/1000;
 
-                    $payableTotalSilverPercent = $this->silverLaw*$this->silverFactor*$this->silverPayable/100-$this->silverDeduction;
+                    $payableTotalSilverPercent = (floor($this->silverLaw*$this->silverFactor*100)/100)*$this->silverPayable/100-$this->silverDeduction;
                     $payableTotal->unit_price_silver =$this->internationalSilver - $this->silverProtection;
                     $payableTotal->total_price_silver =floor(($payableTotal->unit_price_silver*$payableTotalSilverPercent)*1000)/1000;
 
-                    $payableTotalGoldPercent =$this->goldLaw*$this->goldFactor*$this->goldPayable/100-$this->goldDeduction;
+                    $payableTotalGoldPercent =(floor($this->goldLaw*$this->goldFactor*100)/100)*$this->goldPayable/100-$this->goldDeduction;
                     $payableTotal->unit_price_gold =$this->internationalGold - $this->goldProtection;
                     $payableTotal->total_price_gold =floor(($payableTotal->unit_price_gold*$payableTotalGoldPercent)*1000)/1000;
 

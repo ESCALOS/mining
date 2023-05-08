@@ -63,7 +63,7 @@ class Base extends Component
     public function getConcentrates(){
         $concentrates = Concentrate::when($this->search != "", function($q){
             return $q->where('concentrate','like','%'.$this->search.'%')->orWhere('chemical_symbol','like','%'.$this->search.'%');
-        })->paginate(6);
+        })->paginate(10);
         return $concentrates;
     }
 

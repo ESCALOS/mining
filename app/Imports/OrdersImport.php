@@ -139,11 +139,11 @@ class OrdersImport implements OnEachRow,WithHeadingRow
                 $payableTotal->unit_price_copper =floor((($row['cobre_internacional'] - $row['proteccion_cobre'])*2204.62)*1000)/1000;
                 $payableTotal->total_price_copper =floor($payableTotal->unit_price_copper*$payableTotalCopperPercent*1000)/1000;
 
-                $payableTotalSilverPercent = $row['ley_plata']*$row['factor_plata']*$row['pagable_plata']/100-$row['deduccion_plata'];
+                $payableTotalSilverPercent = (floor($row['ley_plata']*$row['factor_plata']*100)/100)*$row['pagable_plata']/100-$row['deduccion_plata'];
                 $payableTotal->unit_price_silver =$row['plata_internacional'] - $row['proteccion_plata'];
                 $payableTotal->total_price_silver =floor(($payableTotal->unit_price_silver*$payableTotalSilverPercent)*1000)/1000;
 
-                $payableTotalGoldPercent = $row['ley_oro']*$row['factor_oro']*$row['pagable_oro']/100-$row['deduccion_oro'];
+                $payableTotalGoldPercent = (floor($row['ley_oro']*$row['factor_oro']*100)/100)*$row['pagable_oro']/100-$row['deduccion_oro'];
                 $payableTotal->unit_price_gold =$row['oro_internacional'] - $row['proteccion_oro'];
                 $payableTotal->total_price_gold =floor(($payableTotal->unit_price_gold*$payableTotalGoldPercent)*1000)/1000;
 

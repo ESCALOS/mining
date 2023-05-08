@@ -31,7 +31,7 @@ class Base extends Component
     public function getUsers(){
         $users = User::when($this->search != "", function($q){
             return $q->where('name','like','%'.$this->search.'%')->orWhere('email','like','%'.$this->search.'%');
-        })->WhereNotIn('id',[1,3])->paginate(6);
+        })->WhereNotIn('id',[1,3])->paginate(10);
         return $users;
     }
 

@@ -30,7 +30,7 @@ class Base extends Component
         })->join('orders','orders.id','settlements.order_id')
         ->join('entities','entities.id','orders.client_id')
         ->join('concentrates','concentrates.id','orders.concentrate_id')
-        ->whereColumn('settlements.wmt_shipped','<>','orders.wmt')->select('settlements.id','settlements.batch','concentrates.concentrate','settlements.order_id','orders.wmt','entities.name')->orderBy('id','DESC')->paginate(6);
+        ->whereColumn('settlements.wmt_shipped','<>','orders.wmt')->select('settlements.id','settlements.batch','concentrates.concentrate','settlements.order_id','orders.wmt','entities.name')->orderBy('id','DESC')->paginate(10);
         return $settlements;
     }
 
