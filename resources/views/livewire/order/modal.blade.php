@@ -5,7 +5,14 @@
         </x-slot>
         <x-slot name="content">
             <div wire:loading.remove>
-                <div class="grid grid-cols-1 sm:grid-cols-2">
+                <div class="grid grid-cols-1 sm:grid-cols-3">
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Fecha:</x-label>
+                        <x-input type="date" style="height:40px;width: 100%" wire:model.defer="date" max="{{ date('Y-m-d') }}"/>
+
+                        <x-input-error for="date"/>
+
+                    </div>
                     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                         <x-label>Ticket:</x-label>
                         <x-input type="text" style="height:40px;width: 100%" wire:model.defer="ticket"/>
@@ -20,6 +27,8 @@
                         <x-input-error for="clientDocumentNumber"/>
 
                     </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2">
                     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                         <x-label>Nombre ó Razón Social del Cliente:</x-label>
                         <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $clientName }}"/>

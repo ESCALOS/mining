@@ -47,6 +47,10 @@ class Settlement extends Model
         return $this->hasOne(AllowedAmount::class);
     }
 
+    public function PenaltyPrice() {
+        return $this->hasOne(PenaltyPrice::class);
+    }
+
     public function Order(){
         return $this->belongsTo(Order::class);
     }

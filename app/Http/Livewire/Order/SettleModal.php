@@ -10,6 +10,7 @@ use App\Models\Law;
 use App\Models\Order;
 use App\Models\PayableTotal;
 use App\Models\Penalty;
+use App\Models\PenaltyPrice;
 use App\Models\PenaltyTotal;
 use App\Models\PercentagePayable;
 use App\Models\Protection;
@@ -32,6 +33,7 @@ class SettleModal extends Component
     public $page;
     public $settlementId;
     public $orderId;
+    public $date;
     public $batch;
     public $withInvoice;
     public $internationalCopper;
@@ -65,6 +67,12 @@ class SettleModal extends Component
     public $zincPenalty;
     public $bismuthPenalty;
     public $mercuryPenalty;
+    public $arsenicPenaltyPrice;
+    public $antomonyPenaltyPrice;
+    public $leadPenaltyPrice;
+    public $zincPenaltyPrice;
+    public $bismuthPenaltyPrice;
+    public $mercuryPenaltyPrice;
     public $arsenicMaximum;
     public $antomonyMaximum;
     public $leadMaximum;
@@ -78,6 +86,7 @@ class SettleModal extends Component
         $this->page = 1;
         $this->settlementId = 0;
         $this->orderId = 0;
+        $this->date = Carbon::now()->toDateString();
         $this->batch = "";
         $this->withInvoice = false;
         $this->internationalCopper = "";
@@ -111,6 +120,12 @@ class SettleModal extends Component
         $this->zincPenalty = "";
         $this->bismuthPenalty = "";
         $this->mercuryPenalty = "";
+        $this->arsenicPenaltyPrice = "";
+        $this->antomonyPenaltyPrice = "";
+        $this->leadPenaltyPrice = "";
+        $this->zincPenaltyPrice = "";
+        $this->bismuthPenaltyPrice = "";
+        $this->mercuryPenaltyPrice = "";
         $this->arsenicMaximum = "";
         $this->antomonyMaximum = "";
         $this->leadMaximum = "";
@@ -135,8 +150,16 @@ class SettleModal extends Component
             $this->page = 1;
             $this->settlementId = $settlementId;
             $this->orderId = $orderId;
+            $this->date = Carbon::now()->toDateString();
+            $this->arsenicPenaltyPrice = 10;
+            $this->antomonyPenaltyPrice = 10.65;
+            $this->leadPenaltyPrice = 5;
+            $this->zincPenaltyPrice = 5;
+            $this->bismuthPenaltyPrice = 10;
+            $this->mercuryPenaltyPrice = 3;
             if($settlementId > 0){
                 $settlement = Settlement::find($settlementId);
+                $this->date = $settlement->date;
                 $this->batch = $settlement->batch;
                 $this->withInvoice = $settlement->with_invoice;
                 $this->internationalCopper = floatval($settlement->InternationalPayment->copper);
@@ -176,6 +199,14 @@ class SettleModal extends Component
                 $this->zincMaximum = number_format($settlement->AllowedAmount->zinc,3);
                 $this->bismuthMaximum = number_format($settlement->AllowedAmount->bismuth,3);
                 $this->mercuryMaximum = number_format($settlement->AllowedAmount->mercury,3);
+                if(PenaltyPrice::where('settlement_id',$this->settlementId)->exists()){
+                    $this->arsenicPenaltyPrice = number_format($settlement->PenaltyPrice->arsenic,3);
+                    $this->antomonyPenaltyPrice = number_format($settlement->PenaltyPrice->antomony,3);
+                    $this->leadPenaltyPrice = number_format($settlement->PenaltyPrice->lead,3);
+                    $this->zincPenaltyPrice = number_format($settlement->PenaltyPrice->zinc,3);
+                    $this->bismuthPenaltyPrice = number_format($settlement->PenaltyPrice->bismuth,3);
+                    $this->mercuryPenaltyPrice = number_format($settlement->PenaltyPrice->mercury,3);
+                }
             }else{
                 $this->withInvoice = 0;
                 $this->silverFactor = 1.1023;
@@ -357,7 +388,8 @@ class SettleModal extends Component
                             'order_id' => $this->orderId,
                             'batch' => $this->createBatch(),
                             'with_invoice' => $this->withInvoice,
-                            'user_id' => Auth::user()->id
+                            'user_id' => Auth::user()->id,
+                            'date' => $this->date
                         ]);
                         $internationalPayment = new InternationalPayment();
                         $percentagePayable = new PercentagePayable();
@@ -368,12 +400,16 @@ class SettleModal extends Component
                         $requirement = new Requirement();
                         $penalty = new Penalty();
                         $allowedAmount = new AllowedAmount();
+                        $penaltyPrice = new PenaltyPrice();
                         $payableTotal = new PayableTotal();
                         $deductionTotal = new DeductionTotal();
                         $penaltyTotal = new PenaltyTotal();
                         $settlementTotal = new SettlementTotal();
                     }else{
                         $settlement = Settlement::find($this->settlementId);
+                        $settlement->with_invoice = $this->withInvoice;
+                        $settlement->date = $this->date;
+                        $settlement->user_id = Auth::user()->id;
                         $internationalPayment = InternationalPayment::where('settlement_id',$this->settlementId)->first();
                         $percentagePayable = PercentagePayable::where('settlement_id',$this->settlementId)->first();
                         $law = Law::where('settlement_id',$this->settlementId)->first();
@@ -383,6 +419,11 @@ class SettleModal extends Component
                         $requirement = Requirement::where('settlement_id',$this->settlementId)->first();
                         $penalty = Penalty::where('settlement_id',$this->settlementId)->first();
                         $allowedAmount = AllowedAmount::where('settlement_id',$this->settlementId)->first();
+                        if(PenaltyPrice::where('settlement_id',$this->settlementId)->exists()){
+                            $penaltyPrice = PenaltyPrice::where('settlement_id',$this->settlementId)->first();
+                        }else{
+                            $penaltyPrice = new PenaltyPrice();
+                        }
                         $payableTotal = PayableTotal::where('settlement_id',$this->settlementId)->first();
                         $deductionTotal = DeductionTotal::where('settlement_id',$this->settlementId)->first();
                         $penaltyTotal = PenaltyTotal::where('settlement_id',$this->settlementId)->first();
@@ -443,7 +484,6 @@ class SettleModal extends Component
                     $penalty->zinc = $this->zincPenalty;
                     $penalty->bismuth = $this->bismuthPenalty;
                     $penalty->mercury = $this->mercuryPenalty;
-                    $penalty->save();
 
                     $allowedAmount->settlement_id = $settlement->id;
                     $allowedAmount->arsenic = $this->arsenicMaximum;
@@ -452,6 +492,14 @@ class SettleModal extends Component
                     $allowedAmount->zinc = $this->zincMaximum;
                     $allowedAmount->bismuth = $this->bismuthMaximum;
                     $allowedAmount->mercury = $this->mercuryMaximum;
+
+                    $penaltyPrice->settlement_id = $settlement->id;
+                    $penaltyPrice->arsenic = $this->arsenicPenaltyPrice;
+                    $penaltyPrice->antomony = $this->antomonyPenaltyPrice;
+                    $penaltyPrice->lead = $this->leadPenaltyPrice;
+                    $penaltyPrice->zinc = $this->zincPenaltyPrice;
+                    $penaltyPrice->bismuth = $this->bismuthPenaltyPrice;
+                    $penaltyPrice->mercury = $this->mercuryPenaltyPrice;
 
                     $payableTotal->settlement_id = $settlement->id;
 
@@ -491,12 +539,12 @@ class SettleModal extends Component
                     $penaltyTotal->leftover_bismuth = $this->bismuthPenalty - $this->bismuthMaximum > 0 ? $this->bismuthPenalty - $this->bismuthMaximum : 0;
                     $penaltyTotal->leftover_mercury = $this->mercuryPenalty - $this->mercuryMaximum > 0 ? $this->mercuryPenalty - $this->mercuryMaximum : 0;
 
-                    $penaltyTotal->total_arsenic = $penaltyTotal->leftover_arsenic*100;
-                    $penaltyTotal->total_antomony = round($penaltyTotal->leftover_antomony*106.5,4,PHP_ROUND_HALF_DOWN);
-                    $penaltyTotal->total_lead = $penaltyTotal->leftover_lead*5;
-                    $penaltyTotal->total_zinc = $penaltyTotal->leftover_zinc*5;
-                    $penaltyTotal->total_bismuth = $penaltyTotal->leftover_bismuth*500;
-                    $penaltyTotal->total_mercury = $penaltyTotal->leftover_mercury/2;
+                    $penaltyTotal->total_arsenic = $penaltyTotal->leftover_arsenic*$penaltyPrice->arsenic*10;
+                    $penaltyTotal->total_antomony = floor($penaltyTotal->leftover_antomony*$penaltyPrice->antomony*10000)/1000;
+                    $penaltyTotal->total_lead = $penaltyTotal->leftover_lead*$penaltyPrice->lead;
+                    $penaltyTotal->total_zinc = $penaltyTotal->leftover_zinc*$penaltyPrice->zinc;
+                    $penaltyTotal->total_bismuth = $penaltyTotal->leftover_bismuth*$penaltyPrice->bismuth*100;
+                    $penaltyTotal->total_mercury = $penaltyTotal->leftover_mercury*$penaltyPrice->mercury*3;
 
                     $settlementTotal->settlement_id = $settlement->id;
 
@@ -509,14 +557,16 @@ class SettleModal extends Component
                     $settlementTotal->detraccion = $this->withInvoice == 1 ? ($settlementTotal->batch_price+$settlementTotal->igv)*0.1 : 0;
                     $settlementTotal->total = $settlementTotal->batch_price+$settlementTotal->igv-$settlementTotal->detraccion;
 
+                    $penalty->save();
+                    $penaltyPrice->save();
                     $penaltyTotal->save();
-
                     $law->save();
                     $payableTotal->save();
                     $order->save();
                     $allowedAmount->save();
                     $deductionTotal->save();
                     $settlementTotal->save();
+                    $settlement->save();
             });
 
             $this->alert('success', 'Orden Liquidada', [

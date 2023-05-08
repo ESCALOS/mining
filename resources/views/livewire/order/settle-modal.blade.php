@@ -10,7 +10,14 @@
                         <div class="w-full py-2 bg-gray-600" >
                             <h1 class="text-lg text-center text-white">Precio Internacional</h1>
                         </div>
-                        <div class="grid grid-cols-4 mt-4">
+                        <div class="grid grid-cols-5 mt-4">
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Fecha:</x-label>
+                                <x-input type="date" style="height:40px;width: 100%" wire:model.defer="date" max="{{ date('Y-m-d') }}"/>
+
+                                <x-input-error for="date"/>
+
+                            </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                                 <x-label>Factura:</x-label>
                                 <select class="form-control" style="width: 100%" wire:model.defer='withInvoice'>
@@ -232,7 +239,7 @@
                                 <x-label>Arsénico:</x-label>
                                 <x-input type="text" style="height:40px;width: 100%" wire:model.defer="arsenicPenalty"/>
 
-                                <x-input-error for="arsenic_penalty"/>
+                                <x-input-error for="arseniPenalty"/>
 
                             </div>
                             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -321,6 +328,55 @@
                             </div>
                         </div>
                     </div>
+                    <div id="Precio_por_Penalidades">
+                        <div class="w-full py-2 mt-4 bg-gray-600">
+                            <h1 class="text-lg text-center text-white">Precio por Penalidades</h1>
+                        </div>
+                        <div class="grid grid-cols-3 mt-4 sm:grid-cols-6">
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Arsénico:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="arsenicPenaltyPrice"/>
+
+                                <x-input-error for="arsenicPenaltyPrice"/>
+
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Antimonio:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="antomonyPenaltyPrice"/>
+
+                                <x-input-error for="antomonyPenaltyPrice"/>
+
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Plomo:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="leadPenaltyPrice"/>
+
+                                <x-input-error for="leadPenaltyPrice"/>
+
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Zinc:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="zincPenaltyPrice"/>
+
+                                <x-input-error for="zincPenaltyPrice"/>
+
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Bismuto:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="bismuthPenaltyPrice"/>
+
+                                <x-input-error for="bismuthPenaltyPrice"/>
+
+                            </div>
+                            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                                <x-label>Mercurio:</x-label>
+                                <x-input type="text" style="height:40px;width: 100%" wire:model.defer="mercuryPenaltyPrice"/>
+
+                                <x-input-error for="mercuryPenaltyPrice"/>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="text-4xl text-center" wire:loading.flex>
@@ -351,7 +407,7 @@
     </x-dialog-modal>
     <x-dialog-modal wire:model='open2' maxWidth="screen">
         <x-slot name="title">
-            Resumen de liquidación
+            Confirmar de liquidación
         </x-slot>
         <x-slot name="content">
             <div wire:loading.remove>
@@ -359,7 +415,15 @@
                     <div class="w-full py-2 bg-gray-600" >
                         <h1 class="text-lg text-center text-white">Precio Internacional</h1>
                     </div>
-                    <div class="grid grid-cols-3 mt-4">
+                    <div class="grid grid-cols-5 mt-4">
+                        <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                            <x-label>Fecha:</x-label>
+                            <x-input type="date" style="height:40px;width: 100%" value="{{ $date }}" disabled/>
+                        </div>
+                        <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                            <x-label>Factura:</x-label>
+                            <x-input type="text" style="height:40px;width: 100%" value="{{ $withInvoice }}" disabled/>
+                        </div>
                         <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
                             <x-label>Cobre Internacional:</x-label>
                             <x-input type="text" style="height:40px;width: 100%" value="{{ $internationalCopper }}" disabled/>

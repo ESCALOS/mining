@@ -3,7 +3,14 @@
         <x-slot name="title">
             Mezclando
         </x-slot>
-        <x-slot name="content">
+        <x-slot name="content"><div class="grid grid-cols-1 sm:grid-cols-2">
+            <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                <x-label>Fecha:</x-label>
+                <x-input type="date" style="height:40px;width: 100%" wire:model.defer="date" max="{{ date('Y-m-d') }}"/>
+
+                <x-input-error for="date"/>
+
+            </div>
             <div class="py-2 text-center" style="padding-left: 1rem; padding-right:1rem">
                 <x-label>Cantidad máxima:</x-label>
                 <x-input type="text" style="height:40px;width: 100%" class="text-center" wire:model="maximumWmt"/>
@@ -11,6 +18,7 @@
                 <x-input-error for="maximumWmt"/>
 
             </div>
+        </div>
             <div class="grid grid-cols-1 sm:grid-cols-5">
             @foreach ($settlementId as $key => $settlement)
             <div class="py-2" style="padding-left: 1rem; padding-right:1rem">

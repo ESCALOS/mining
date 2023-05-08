@@ -16,6 +16,7 @@ class Modal extends Component
 
     public $open;
     public $orderId;
+    public $date;
     public $ticket;
     public $clientDocumentNumber;
     public $clientName;
@@ -72,6 +73,7 @@ class Modal extends Component
     public function mount(){
         $this->open =false;
         $this->orderId = 0;
+        $this->date = Carbon::now()->toDateString();
         $this->ticket = "";
         $this->clientDocumentNumber = "";
         $this->clientName = "";
@@ -94,8 +96,10 @@ class Modal extends Component
         $this->resetValidation();
         $this->resetExcept('open','concentrates');
         $this->orderId = $id;
+        $this->date = Carbon::now()->toDateString();
         if($id > 0){
             $order = Order::find($id);
+            $this->date = $order->date;
             $this->ticket = $order->ticket;
             $this->clientDocumentNumber = $order->Client->document_number;
             $this->clientName = $order->Client->name;
@@ -250,6 +254,7 @@ class Modal extends Component
         }else{
             $order = new Order();
         }
+        $order->date = $this->date;
         $order->ticket = strtoupper($this->ticket);
         $order->batch = $this->createBatch();
         $order->client_id = Entity::where('document_number',$this->clientDocumentNumber)->first()->id;

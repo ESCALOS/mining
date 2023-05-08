@@ -17,6 +17,7 @@ class BlendingModal extends Component
 
     public $open;
     public $settlementId;
+    public $date;
     public $batch;
     public $concentrate;
     public $wmt;
@@ -28,6 +29,7 @@ class BlendingModal extends Component
 
     public function mount(){
         $this->open = false;
+        $this->date = Carbon::now()->toDateString();
         $this->settlementId = [];
         $this->maximumWmt = 0;
         $this->batch = [];
@@ -39,6 +41,7 @@ class BlendingModal extends Component
 
     public function abrirModal($settlementId){
         $this->settlementId = $settlementId;
+        $this->date = Carbon::now()->toDateString();
         $this->maximumWmt = 0;
         $this->batch = [];
         $this->concentrate = [];
@@ -113,7 +116,9 @@ class BlendingModal extends Component
             DB::transaction(function(){
                 $dispatch = Dispatch::create([
                     'batch' => $this->createBatch(),
-                    'user_id' => Auth::user()->id
+                    'user_id' => Auth::user()->id,
+                    'date_blending' => $this->date,
+                    'date_shipped' => null
                 ]);
                 foreach($this->settlementId as $key => $id){
                     DispatchDetail::create([
@@ -130,9 +135,9 @@ class BlendingModal extends Component
                     'timer' => 2000,
                     'toast' => true,
                 ]);
-                $this->emitTo('settlement.base','render');
-                $this->open = false;
             });
+            $this->emitTo('blending.base','render');
+            $this->open = false;
         }catch(\Exception $e){
             $this->alert('error', $e, [
                 'position' => 'center',
