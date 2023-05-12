@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Settlement;
 
+use App\Models\Dispatch;
 use App\Models\Settlement;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +17,7 @@ class Base extends Component
     public $search;
     public $boton_activo;
 
-    protected $listeners = ['render'];
+    protected $listeners = ['render','delete'];
 
     public function mount(){
         $this->search = "";
@@ -61,6 +62,32 @@ class Base extends Component
                 'toast' => true,
             ]);
         }
+    }
+
+    public function confirmDelete($id){
+        $this->settlementId = $id;
+        $this->alert('question','¿Estas seguro de eliminar la liquidación?',[
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Sí',
+            'onConfirmed' => 'confirmed',
+            'position' => 'center',
+            'toast' => false,
+            'showCancelButton' => true,
+            'cancelButtonText' => 'No',
+            'timer' => 10000,
+            'onConfirmed' => 'delete',
+        ]);
+    }
+
+    public function delete(){
+        $dispatch = Dispatch::find($this->settlementId);
+        $dispatch->shipped = false;
+        $dispatch->save();
+        $this->alert('success', 'Regresado a despacho!', [
+            'position' => 'center',
+            'timer' => 2000,
+            'toast' => false,
+        ]);
     }
 
     public function render()

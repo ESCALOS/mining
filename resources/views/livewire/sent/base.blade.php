@@ -31,8 +31,13 @@
                         </div>
                     </td>
                     <td class="py-3 text-center">
-                        <div title="Ver detalles" class="w-10 h-10 mx-auto" wire:click="$emit('abrirModal',{{ $dispatch->id }})">
-                            <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
+                        <div class="grid grid-cols-2 mx-auto text-center">
+                            <div title="Regresar a despacho" class="w-10 h-10 mx-auto" wire:click="confirmUnship({{ $dispatch->id }})">
+                                <x-icons.arrow-left :size="10" : class="p-2 font-medium text-center text-white bg-red-500 rounded-md"/>
+                            </div>
+                            <div title="Ver detalles" class="w-10 h-10 mx-auto" wire:click="$emit('abrirModal',{{ $dispatch->id }})">
+                                <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
+                            </div>
                         </div>
                     </td>
                 </tr>

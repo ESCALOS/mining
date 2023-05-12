@@ -55,12 +55,15 @@
                         </div>
                     </td>
                     <td class="py-3 text-center">
-                        <div class="grid grid-cols-2 mx-auto text-center">
+                        <div class="grid grid-cols-3 mx-auto text-center">
                             <div title="Editar" class="w-10 h-10 mx-auto" wire:click="abrirSettleModal({{ $settlement->id }},{{ $settlement->order_id }})">
                                 <x-icons.pencil :size="10" : class="p-2 font-medium text-center text-white rounded-md bg-amber-500"/>
                             </div>
                             <div title="Ver detalles" class="w-10 h-10 mx-auto" wire:click='$emitTo("settlement.detail-modal","showDetails",{{ $settlement->id }})'>
                                 <x-icons.eye :size="10" : class="p-2 font-medium text-center text-white bg-blue-500 rounded-md"/>
+                            </div>
+                            <div title="Eliminar" class="w-10 h-10 mx-auto" wire:click="confirmDelete({{ $settlement->id }})">
+                                <x-icons.trash :size="10" : class="p-2 font-medium text-center text-white bg-red-500 rounded-md"/>
                             </div>
                         </div>
                     </td>

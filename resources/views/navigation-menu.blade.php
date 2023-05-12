@@ -47,6 +47,18 @@
                     <x-nav-link href="{{ route('colaborador.orders') }}" :active="request()->routeIs('colaborador.orders')">
                         Órdenes
                     </x-nav-link>
+                    <x-nav-link href="{{ route('colaborador.blendings') }}" :active="request()->routeIs('colaborador.blendings')">
+                        Blending
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('colaborador.settlements') }}" :active="request()->routeIs('colaborador.settlements')">
+                        Liquidaciones
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('colaborador.dispatches') }}" :active="request()->routeIs('colaborador.dispatches')">
+                        Despacho
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('colaborador.sent') }}" :active="request()->routeIs('colaborador.sent')">
+                        Enviados
+                    </x-nav-link>
                     @endif
                 </div>
             </div>

@@ -69,7 +69,7 @@ class Base extends Component
             })->orWhereHas('Concentrate',function($q){
                 return $q->where('concentrate','like','%'.$this->search.'%');
             });
-        })->latest()->paginate(10);
+        })->orderBy('batch','desc')->paginate(10);
         return $orders;
     }
 
