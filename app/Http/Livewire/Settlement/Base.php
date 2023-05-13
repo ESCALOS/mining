@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Settlement;
 
 use App\Models\Dispatch;
+use App\Models\DispatchDetail;
 use App\Models\Settlement;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -66,28 +68,55 @@ class Base extends Component
 
     public function confirmDelete($id){
         $this->settlementId = $id;
-        $this->alert('question','¿Estas seguro de eliminar la liquidación?',[
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Sí',
-            'onConfirmed' => 'confirmed',
-            'position' => 'center',
-            'toast' => false,
-            'showCancelButton' => true,
-            'cancelButtonText' => 'No',
-            'timer' => 10000,
-            'onConfirmed' => 'delete',
-        ]);
+        if(DispatchDetail::where('settlement_id', $this->settlementId)->exists()){
+            $this->alert('warning','La liquidación ya se mezcló',[
+                'position' => 'center',
+                'timer' => 2000,
+                'toast' => false,
+            ]);
+        }else{
+            $this->alert('question','¿Estas seguro de eliminar la liquidación?',[
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Sí',
+                'onConfirmed' => 'confirmed',
+                'position' => 'center',
+                'toast' => false,
+                'showCancelButton' => true,
+                'cancelButtonText' => 'No',
+                'timer' => 10000,
+                'onConfirmed' => 'delete',
+            ]);
+        }
     }
 
     public function delete(){
-        $dispatch = Dispatch::find($this->settlementId);
-        $dispatch->shipped = false;
-        $dispatch->save();
-        $this->alert('success', 'Regresado a despacho!', [
-            'position' => 'center',
-            'timer' => 2000,
-            'toast' => false,
-        ]);
+        DB::beginTransaction();
+        try{
+            DB::table('international_payments')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('percentage_payables')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('laws')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('protections')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('deductions')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('refinements')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('requirements')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('penalties')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('allowed_amounts')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('penalty_prices')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('payable_totals')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('deduction_totals')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('penalty_totals')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('settlement_totals')->where('settlement_id', $this->settlementId)->delete();
+            DB::table('settlements')->where('id', $this->settlementId)->delete();
+            DB::commit();
+            $this->settlementId = 0;
+        }catch(\Exception $e){
+            DB::rollback();
+            $this->alert('error',$e,[
+                'position' => 'center',
+                'timer' => null,
+                'toast' => false,
+            ]);
+        }
     }
 
     public function render()
