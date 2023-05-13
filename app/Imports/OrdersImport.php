@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Exceptions\ImportErrorException;
 use App\Models\Concentrate;
 use App\Models\Entity;
 use App\Models\Order;
@@ -15,6 +16,9 @@ class OrdersImport implements OnEachRow,WithHeadingRow
 {
 
     private $latestBatchNumber;
+    private $hasError = false;
+    private $errorMessage;
+    private $i;
 
 
     public function __construct()
@@ -22,6 +26,7 @@ class OrdersImport implements OnEachRow,WithHeadingRow
         // Obtener el número de lote más alto actual
         $latestBatch = DB::table('orders')->orderBy('batch', 'desc')->first();
         $this->latestBatchNumber = $latestBatch ? substr($latestBatch->batch, -4) : 0;
+        $this->i = 1;
     }
 
     public function onRow(Row $row)
@@ -31,6 +36,7 @@ class OrdersImport implements OnEachRow,WithHeadingRow
         if($row['ticket'] != "" && $row['ticket'] != null && $tipoDocumento != "") {
 
             $this->latestBatchNumber++;
+            $this->i++;
 
             $concentrate = Concentrate::firstOrCreate([
                 'concentrate' => $row['concentrado'],
@@ -41,10 +47,15 @@ class OrdersImport implements OnEachRow,WithHeadingRow
             $month = date('m');
             $correlative = str_pad($this->latestBatchNumber, 4, '0', STR_PAD_LEFT);
 
+            $cliente = $this->getEntity($row['ruc_cliente'],$tipoDocumento,empty($row['direccion']) ? '' : $row['direccion']);
+
+            if($cliente == null){
+                throw new ImportErrorException("El ruc ".$row['ruc_cliente']." es inválido en la fila ".$this->i);
+            }
             Order::create([
                 'ticket' => strtoupper($row['ticket']),
                 'batch' => "O{$year}{$month}-{$correlative}",
-                'client_id' => $this->getEntity($row['ruc_cliente'],$tipoDocumento,empty($row['direccion']) ? '' : $row['direccion']),
+                'client_id' => $cliente,
                 'concentrate_id' => $concentrate->id,
                 'wmt' => $row['tmh'],
                 'origin' => $row['procedencia'],
@@ -53,10 +64,9 @@ class OrdersImport implements OnEachRow,WithHeadingRow
                 'transport_guide' => empty($row['guia_de_transporte']) ? '' : $row['guia_de_transporte'],
                 'delivery_note' => empty($row['guia_de_remision']) ? '' : $row['guia_de_remision'],
                 'weighing_scale_company_id' => $this->getEntity($row['ruc_balanza'],'ruc',0),
-                'settled' => true,
+                'settled' => false,
                 'user_id' => Auth::user()->id,
             ]);
-
         }
     }
 
@@ -93,10 +103,46 @@ class OrdersImport implements OnEachRow,WithHeadingRow
                         'address' => strtoupper($address == 0 ? $empresa->direccion : $address),
                     ]
                 );
+            }else{
+                $entity = null;
             }
         }
+        if($entity != null){
+            return $entity->id;
+        }else{
+            return null;
+        }
 
-        return $entity->id;
+    }
+
+    public function onError(\Throwable $e)
+    {
+        // Se llama si ocurre un error en cualquier fila durante la importación
+        // Puedes realizar acciones adicionales o registrar el error si es necesario
+        DB::rollBack();
+    }
+
+    public function onFailure(\Throwable $e)
+    {
+        // Se llama si ocurre un error grave durante la importación antes de que se procese cualquier fila
+        // Puedes realizar acciones adicionales o registrar el error si es necesario
+        DB::rollBack();
+    }
+
+    public function getHasError()
+    {
+        return $this->hasError;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+
+    private function validateData($rowData)
+    {
+        // Realiza las validaciones necesarias en los datos importados
+        // Retorna true si los datos cumplen con la regla, de lo contrario retorna false
     }
 
     public function checkDocumentNumber($numero)

@@ -9,6 +9,8 @@
                 <input type="file" style="height:40px;width: 100%" wire:model="archivo" id="i{{ $file_number }}"/>
 
                 <x-input-error for="archivo"/>
+
+                <x-boton-crud accion="exportarFormato()" color="green">Descargar Formato</x-boton-crud>
             </div>
         </x-slot>
         <x-slot name="footer">
