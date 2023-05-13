@@ -50,8 +50,21 @@ class OrdersImport implements OnEachRow,WithHeadingRow
             $cliente = $this->getEntity($row['ruc_cliente'],$tipoDocumento,empty($row['direccion']) ? '' : $row['direccion']);
 
             if($cliente == null){
-                throw new ImportErrorException("El ruc ".$row['ruc_cliente']." es inválido en la fila ".$this->i);
+                throw new ImportErrorException("El ruc del cliente ".$row['ruc_cliente']." es inválido en la fila ".$this->i);
             }
+
+            $transportista = $this->getEntity($row['ruc_transportista'],'ruc',0);
+
+            if($transportista == null){
+                throw new ImportErrorException("El ruc del transportista ".$row['ruc_transportista']." es inválido en la fila ".$this->i);
+            }
+
+            $balanza = $this->getEntity($row['ruc_balanza'],'ruc',0);
+
+            if($balanza == null){
+                throw new ImportErrorException("El ruc de balanza ".$row['ruc_balanza']." es inválido en la fila ".$this->i);
+            }
+
             Order::create([
                 'ticket' => strtoupper($row['ticket']),
                 'batch' => "O{$year}{$month}-{$correlative}",
@@ -59,11 +72,11 @@ class OrdersImport implements OnEachRow,WithHeadingRow
                 'concentrate_id' => $concentrate->id,
                 'wmt' => $row['tmh'],
                 'origin' => $row['procedencia'],
-                'carriage_company_id' => $this->getEntity($row['ruc_transportista'],'ruc',0),
+                'carriage_company_id' => $transportista,
                 'plate_number' => $row['numero_de_placa'],
                 'transport_guide' => empty($row['guia_de_transporte']) ? '' : $row['guia_de_transporte'],
                 'delivery_note' => empty($row['guia_de_remision']) ? '' : $row['guia_de_remision'],
-                'weighing_scale_company_id' => $this->getEntity($row['ruc_balanza'],'ruc',0),
+                'weighing_scale_company_id' => $balanza,
                 'settled' => false,
                 'user_id' => Auth::user()->id,
             ]);
