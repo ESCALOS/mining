@@ -127,6 +127,119 @@
                 </div>
             </div>
         </div>
+        @if ($shipped)
+        <div id="Rentabilidad">
+            <div class="w-full py-2 mt-4 bg-blue-600">
+                <h1 class="text-lg text-center text-white">Rentabilidad</h1>
+            </div>
+            <div class="grid grid-cols-3 mt-2">
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>T.DOC:</x-label>
+                    <select class="form-select" style="width: 100%" wire:model.defer='rentTipoDoc'>
+                        <option>FACTURA</option>
+                        <option>BOLETA</option>
+                    </select>
+                    <x-input-error for="rentTipoDoc"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>SERIE:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentSerie'/>
+                    <x-input-error for="rentSerie"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>NÚMERO:</x-label>
+                    <x-input type="number" style="height:40px;width: 100%" wire:model.defer='rentNumero'/>
+                    <x-input-error for="rentNumero"/>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 mt-2">
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>RUC:</x-label>
+                    <x-input type="number" style="height:40px;width: 100%" wire:model.lazy='rentRuc'/>
+                    <x-input-error for="rentRuc"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>CLIENTE:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentCliente'/>
+                    <x-input-error for="rentCliente"/>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 mt-2">
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>B. IMPONIBLE:</x-label>
+                    <x-input type="number" style="height:40px;width: 100%" wire:model='rentImponible'/>
+                    <x-input-error for="rentImponible"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>IGV:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $rentImponible == '' ? 0 : number_format($rentImponible*0.18,2) }}"/>
+                </div>
+                <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                    <x-label>TOTAL:</x-label>
+                    <x-input type="text" style="height:40px;width: 100%" disabled value="{{ $rentImponible == '' ? 0 : number_format($rentImponible*1.18,2) }}"/>
+                </div>
+            </div>
+            <div id="Promedio de Leyes Real">
+                <div class="w-full py-2 mt-4 bg-amber-600">
+                    <h1 class="text-lg text-center text-white">Promedio de Leyes Real</h1>
+                </div>
+                <div class="grid grid-cols-3 mt-2">
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Cobre:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentCopper'/>
+                        <x-input-error for="rentCopper"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Plata:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentSilver'/>
+                        <x-input-error for="rentSilver"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Oro:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentGold'/>
+                        <x-input-error for="rentGold"/>
+                    </div>
+                </div>
+            </div>
+            <div id="Promedio de Penalidades Real">
+                <div class="w-full py-2 mt-4 bg-red-600">
+                    <h1 class="text-lg text-center text-white">Promedio de Penalidades Real</h1>
+                </div>
+                <div class="grid grid-cols-6 mt-2">
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Arsenico:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentArsenic'/>
+                        <x-input-error for="rentArsenic"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Antimonio:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentAntomony'/>
+                        <x-input-error for="rentAntomony"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Plomo:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentLead'/>
+                        <x-input-error for="rentLead"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Zinc:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentZinc'/>
+                        <x-input-error for="rentZinc"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Bismuto:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentBismuth'/>
+                        <x-input-error for="rentBismuth"/>
+                    </div>
+                    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+                        <x-label>Mercurio:</x-label>
+                        <x-input type="text" style="height:40px;width: 100%" wire:model.defer='rentMercury'/>
+                        <x-input-error for="rentMercury"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
         </x-slot>
         <x-slot name="footer">
             <x-button class="mr-2" wire:loading.attr="disabled" wire:click="printDispatch">
@@ -139,6 +252,8 @@
             </x-button>
             @if (!$shipped)
             <x-boton-crud wire:loading.attr="disabled" accion="$emit('confirmShip',{{ $dispatchId }})" color="green">Enviar</x-boton-crud>
+            @else
+            <x-boton-crud wire:loading.attr="disabled" accion="saveProfitability" color="green">Guardar</x-boton-crud>
             @endif
             <x-secondary-button wire:click="$set('open',false)" class="ml-2">
                 Cerrar
