@@ -15,6 +15,7 @@ class Base extends Component
     public $orderId;
     public $search;
     public $boton_activo;
+    public $estado;
 
     protected $listeners = ['render','anuladoConfirmado','confirmSettle'];
 
@@ -22,6 +23,7 @@ class Base extends Component
         $this->search = "";
         $this->orderId = 0;
         $this->boton_activo = false;
+        $this->estado = "";
     }
 
     public function seleccionar($id) {
@@ -69,7 +71,11 @@ class Base extends Component
             })->orWhereHas('Concentrate',function($q){
                 return $q->where('concentrate','like','%'.$this->search.'%');
             });
-        })->orderBy('batch','desc')->paginate(10);
+        });
+        if($this->estado == 1 || $this->estado == 0){
+            $orders = $orders->where('settled',$this->estado);
+        }
+        $orders = $orders->orderBy('batch','desc')->paginate(10);
         return $orders;
     }
 

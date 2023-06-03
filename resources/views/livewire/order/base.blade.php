@@ -8,9 +8,19 @@
         <x-boton-crud accion="$emitTo('order.settle-modal','abrirModal',0,{{$orderId}})" color="blue" :activo="$boton_activo">Liquidar</x-boton-crud>
         <x-boton-crud accion="$emitTo('order.import-modal','abrirModal')" color="gray">Importar</x-boton-crud>
     </div>
-
-    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-        <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
+    <div class="grid grid-cols-4">
+        <div class="col-span-3 py-2" style="padding-left: 1rem; padding-right:1rem">
+            <x-label>Buscar:</x-label>
+            <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
+        </div>
+        <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
+            <x-label>Estado:</x-label>
+            <select class="form-select" style="width: 100%" wire:model='estado'>
+                <option value="">Todos</option>
+                <option value="1">Liquidados</option>
+                <option value="0">No liquidados</option>
+            </select>
+        </div>
     </div>
     @if ($orders->count())
     <table class="w-full overflow-x-scroll table-fixed" wire:loading.remove wire:target='getOrders'>
