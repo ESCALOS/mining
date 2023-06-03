@@ -28,7 +28,7 @@
         </thead>
         <tbody class="text-sm font-light text-gray-600">
             @foreach ($settlements as $settlement)
-                <tr style="cursor:pointer" class="border-b {{ $settlement->id == $settlementId ? 'bg-blue-200' : '' }} border-gray-200">
+                <tr style="cursor:pointer" class="border-b border-gray-200">
                     <td class="py-3 text-center">
                         <div>
                             <span class="font-medium">{{ $settlement->batch }}</span>
