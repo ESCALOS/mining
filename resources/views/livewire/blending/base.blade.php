@@ -38,7 +38,7 @@
                 <tr style="cursor:pointer" class="border-b {{ $settlement->id == $settlementId ? 'bg-blue-200' : '' }} border-gray-200">
                     <td class="py-3 text-center">
                         <div class="flex items-center h-5">
-                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 ml-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:click="seleccionar({{$settlement->id}})">
+                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" {{ in_array($settlement->id,$settlementId) ? 'checked' : '' }} class="w-4 h-4 ml-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:click="seleccionar({{$settlement->id}})">
                         </div>
                     </td>
                     <td class="py-3 text-center">
