@@ -7,6 +7,9 @@
         <thead>
             <tr class="text-sm leading-normal text-gray-600 uppercase bg-gray-200">
                 <th class="py-3 text-center">
+                    <span class="block">Fecha</span>
+                </th>
+                <th class="py-3 text-center">
                     <span class="block">Lote</span>
                 </th>
                 <th class="py-3 text-center">
@@ -29,6 +32,11 @@
         <tbody class="text-sm font-light text-gray-600">
             @foreach ($settlements as $settlement)
                 <tr style="cursor:pointer" class="border-b border-gray-200">
+                    <td class="py-3 text-center">
+                        <div>
+                            <span class="font-medium">{{ $settlement->date }}</span>
+                        </div>
+                    </td>
                     <td class="py-3 text-center">
                         <div>
                             <span class="font-medium">{{ $settlement->batch }}</span>

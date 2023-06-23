@@ -156,73 +156,18 @@ class SettleModal extends Component
             $this->leadPenaltyPrice = 5;
             $this->zincPenaltyPrice = 5;
             $this->bismuthPenaltyPrice = 10;
-            $this->mercuryPenaltyPrice = 3;
+            $this->mercuryPenaltyPrice = 10;
             if($settlementId > 0){
-                $settlement = Settlement::find($settlementId);
-                $this->date = $settlement->date;
-                $this->batch = $settlement->batch;
-                $this->withInvoice = $settlement->with_invoice;
-                $this->internationalCopper = floatval($settlement->InternationalPayment->copper);
-                $this->internationalSilver = floatval($settlement->InternationalPayment->silver);
-                $this->internationalGold = floatval($settlement->InternationalPayment->gold);
-                $this->copperLaw = floatval($settlement->Law->copper);
-                $this->humidity = floatval($settlement->Law->humidity);
-                $this->decrease = floatval($settlement->Law->decrease);
-                $this->silverLaw = floatval($settlement->Law->silver);
-                $this->silverFactor = floatval($settlement->Law->silver_factor);
-                $this->goldLaw = floatval($settlement->Law->gold);
-                $this->goldFactor = floatval($settlement->Law->gold_factor);
-                $this->copperPayable = floatval($settlement->PercentagePayable->copper);
-                $this->silverPayable = floatval($settlement->PercentagePayable->silver);
-                $this->goldPayable = floatval($settlement->PercentagePayable->gold);
-                $this->copperProtection = floatval($settlement->Protection->copper);
-                $this->silverProtection = floatval($settlement->Protection->silver);
-                $this->goldProtection = floatval($settlement->Protection->gold);
-                $this->copperDeduction = floatval($settlement->Deduction->copper);
-                $this->silverDeduction = floatval($settlement->Deduction->silver);
-                $this->goldDeduction = floatval($settlement->Deduction->gold);
-                $this->copperRefinement = floatval($settlement->Refinement->copper);
-                $this->silverRefinement = floatval($settlement->Refinement->silver);
-                $this->goldRefinement = floatval($settlement->Refinement->gold);
-                $this->maquila = floatval($settlement->Requirement->maquila);
-                $this->analysis = floatval($settlement->Requirement->analysis);
-                $this->stevedore = floatval($settlement->Requirement->stevedore);
-                $this->arsenicPenalty = number_format($settlement->Penalty->arsenic,3);
-                $this->antomonyPenalty = number_format($settlement->Penalty->antomony,3);
-                $this->leadPenalty = number_format($settlement->Penalty->lead,3);
-                $this->zincPenalty = number_format($settlement->Penalty->zinc,3);
-                $this->bismuthPenalty = number_format($settlement->Penalty->bismuth,3);
-                $this->mercuryPenalty = number_format($settlement->Penalty->mercury,3);
-                $this->arsenicMaximum = number_format($settlement->AllowedAmount->arsenic,3);
-                $this->antomonyMaximum = number_format($settlement->AllowedAmount->antomony,3);
-                $this->leadMaximum = number_format($settlement->AllowedAmount->lead,3);
-                $this->zincMaximum = number_format($settlement->AllowedAmount->zinc,3);
-                $this->bismuthMaximum = number_format($settlement->AllowedAmount->bismuth,3);
-                $this->mercuryMaximum = number_format($settlement->AllowedAmount->mercury,3);
-                if(PenaltyPrice::where('settlement_id',$this->settlementId)->exists()){
-                    $this->arsenicPenaltyPrice = number_format($settlement->PenaltyPrice->arsenic,3);
-                    $this->antomonyPenaltyPrice = number_format($settlement->PenaltyPrice->antomony,3);
-                    $this->leadPenaltyPrice = number_format($settlement->PenaltyPrice->lead,3);
-                    $this->zincPenaltyPrice = number_format($settlement->PenaltyPrice->zinc,3);
-                    $this->bismuthPenaltyPrice = number_format($settlement->PenaltyPrice->bismuth,3);
-                    $this->mercuryPenaltyPrice = number_format($settlement->PenaltyPrice->mercury,3);
-                }
+                $this->fillCamps($settlementId);
             }else{
-                $this->withInvoice = 0;
-                $this->silverFactor = 1.1023;
-                $this->goldFactor = 1.1023;
-                $this->arsenicPenalty = 0;
-                $this->antomonyPenalty = 0;
-                $this->leadPenalty = 0;
-                $this->zincPenalty = 0;
-                $this->bismuthPenalty = 0;
-                $this->mercuryPenalty = 0;
-                $this->arsenicMaximum = 0;
-                $this->antomonyMaximum = 0;
-                $this->leadMaximum = 0;
-                $this->zincMaximum = 0;
-                $this->bismuthMaximum = 0;
-                $this->mercuryMaximum = 0;
+                $client = Order::find($orderId)->client_id;
+                $order = Order::where('client_id',$client)->where('settled',1)->orderBy('id','DESC')->first();
+                if($order){
+                    $settlement = Settlement::where('order_id',$order->id)->first();
+                    $this->fillCamps($settlement->id);
+                }else{
+                    $this->fillCamps($settlementId);
+                }
             }
             $this->open = true;
             $this->alert('success', '¡Datos Cargados!', [
@@ -353,6 +298,76 @@ class SettleModal extends Component
             'bismuthMaximum.decimal' => '3 decimales como máximo',
             'mercuryMaximum.decimal' => '3 decimales como máximo',
         ];
+    }
+
+    private function fillCamps($settlementId){
+        if($settlementId > 0){
+            $settlement = Settlement::find($settlementId);
+            $this->date = $settlement->date;
+            $this->batch = $settlement->batch;
+            $this->withInvoice = $settlement->with_invoice;
+            $this->internationalCopper = floatval($settlement->InternationalPayment->copper);
+            $this->internationalSilver = floatval($settlement->InternationalPayment->silver);
+            $this->internationalGold = floatval($settlement->InternationalPayment->gold);
+            $this->copperLaw = floatval($settlement->Law->copper);
+            $this->humidity = floatval($settlement->Law->humidity);
+            $this->decrease = floatval($settlement->Law->decrease);
+            $this->silverLaw = floatval($settlement->Law->silver);
+            $this->silverFactor = floatval($settlement->Law->silver_factor);
+            $this->goldLaw = floatval($settlement->Law->gold);
+            $this->goldFactor = floatval($settlement->Law->gold_factor);
+            $this->copperPayable = floatval($settlement->PercentagePayable->copper);
+            $this->silverPayable = floatval($settlement->PercentagePayable->silver);
+            $this->goldPayable = floatval($settlement->PercentagePayable->gold);
+            $this->copperProtection = floatval($settlement->Protection->copper);
+            $this->silverProtection = floatval($settlement->Protection->silver);
+            $this->goldProtection = floatval($settlement->Protection->gold);
+            $this->copperDeduction = floatval($settlement->Deduction->copper);
+            $this->silverDeduction = floatval($settlement->Deduction->silver);
+            $this->goldDeduction = floatval($settlement->Deduction->gold);
+            $this->copperRefinement = floatval($settlement->Refinement->copper);
+            $this->silverRefinement = floatval($settlement->Refinement->silver);
+            $this->goldRefinement = floatval($settlement->Refinement->gold);
+            $this->maquila = floatval($settlement->Requirement->maquila);
+            $this->analysis = floatval($settlement->Requirement->analysis);
+            $this->stevedore = floatval($settlement->Requirement->stevedore);
+            $this->arsenicPenalty = number_format($settlement->Penalty->arsenic,3);
+            $this->antomonyPenalty = number_format($settlement->Penalty->antomony,3);
+            $this->leadPenalty = number_format($settlement->Penalty->lead,3);
+            $this->zincPenalty = number_format($settlement->Penalty->zinc,3);
+            $this->bismuthPenalty = number_format($settlement->Penalty->bismuth,3);
+            $this->mercuryPenalty = number_format($settlement->Penalty->mercury,3);
+            $this->arsenicMaximum = number_format($settlement->AllowedAmount->arsenic,3);
+            $this->antomonyMaximum = number_format($settlement->AllowedAmount->antomony,3);
+            $this->leadMaximum = number_format($settlement->AllowedAmount->lead,3);
+            $this->zincMaximum = number_format($settlement->AllowedAmount->zinc,3);
+            $this->bismuthMaximum = number_format($settlement->AllowedAmount->bismuth,3);
+            $this->mercuryMaximum = number_format($settlement->AllowedAmount->mercury,3);
+            if(PenaltyPrice::where('settlement_id',$this->settlementId)->exists()){
+                $this->arsenicPenaltyPrice = number_format($settlement->PenaltyPrice->arsenic,3);
+                $this->antomonyPenaltyPrice = number_format($settlement->PenaltyPrice->antomony,3);
+                $this->leadPenaltyPrice = number_format($settlement->PenaltyPrice->lead,3);
+                $this->zincPenaltyPrice = number_format($settlement->PenaltyPrice->zinc,3);
+                $this->bismuthPenaltyPrice = number_format($settlement->PenaltyPrice->bismuth,3);
+                $this->mercuryPenaltyPrice = number_format($settlement->PenaltyPrice->mercury,3);
+            }
+        }else{
+            $this->withInvoice = 0;
+            $this->silverFactor = 1.1023;
+            $this->goldFactor = 1.1023;
+            $this->arsenicPenalty = 0;
+            $this->antomonyPenalty = 0;
+            $this->leadPenalty = 0;
+            $this->zincPenalty = 0;
+            $this->bismuthPenalty = 0;
+            $this->mercuryPenalty = 0;
+            $this->arsenicMaximum = 0;
+            $this->antomonyMaximum = 0;
+            $this->leadMaximum = 0;
+            $this->zincMaximum = 0;
+            $this->bismuthMaximum = 0;
+            $this->mercuryMaximum = 0;
+        }
     }
 
     public function confirmSettle(){
@@ -544,7 +559,7 @@ class SettleModal extends Component
                     $penaltyTotal->total_lead = $penaltyTotal->leftover_lead*$penaltyPrice->lead;
                     $penaltyTotal->total_zinc = $penaltyTotal->leftover_zinc*$penaltyPrice->zinc;
                     $penaltyTotal->total_bismuth = $penaltyTotal->leftover_bismuth*$penaltyPrice->bismuth*100;
-                    $penaltyTotal->total_mercury = $penaltyTotal->leftover_mercury*$penaltyPrice->mercury*3;
+                    $penaltyTotal->total_mercury = $penaltyTotal->leftover_mercury*$penaltyPrice->mercury/20;
 
                     $settlementTotal->settlement_id = $settlement->id;
 

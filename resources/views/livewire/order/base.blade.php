@@ -27,6 +27,9 @@
         <thead>
             <tr class="text-sm leading-normal text-gray-600 uppercase bg-gray-200">
                 <th class="py-3 text-center">
+                    <span class="block">Fecha</span>
+                </th>
+                <th class="py-3 text-center">
                     <span class="block">Lote</span>
                 </th>
                 <th class="py-3 text-center">
@@ -46,6 +49,11 @@
         <tbody class="text-sm font-light text-gray-600">
             @foreach ($orders as $order)
                 <tr style="cursor:pointer" wire:click="seleccionar({{$order->id}})" class="border-b {{ $order->id == $orderId ? 'bg-blue-200' : '' }} border-gray-200">
+                    <td class="py-3 text-center">
+                        <div>
+                            <span class="font-medium">{{ $order->date }}</span>
+                        </div>
+                    </td>
                     <td class="py-3 text-center">
                         <div>
                             <span class="font-medium">{{ $order->batch }}</span>

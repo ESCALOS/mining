@@ -55,6 +55,7 @@ class BlendingModal extends Component
             $this->wmt[$key] = $settlement->Order->wmt;
             $this->missingWmt[$key] = $this->wmt[$key] - $settlement->wmt_shipped;
             $this->wmtToShip[$key] = $this->missingWmt[$key];
+            $this->maximumWmt += $this->missingWmt[$key];
         }
         $this->open = true;
     }

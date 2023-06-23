@@ -54,36 +54,43 @@
                     <table style="width: 100%" align="center">
                         <tr>
                             <td>
-                                <label for="ticket" class="mb-0">Ticket:</label>
-                                <input type="text" class="form-control" id="ticket" placeholder="168918" readonly value="{{ $settlement->batch }}">
+                                <label class="mb-0">Ticket:</label>
+                                <input type="text" class="form-control" readonly value="{{ $settlement->batch }}">
                             </td>
+                            <td></td>
                             <td width="20px"></td>
+                            <td></td>
                             <td>
-                                <label for="cliente_ruc" class="mb-0">Nro. Documento:</label>
-                                <input type="text" class="form-control" id="cliente_ruc" readonly value="{{ $settlement->Order->Client->document_number }}">
+                                <label class="mb-0">Nro. Documento:</label>
+                                <input type="text" class="form-control" readonly value="{{ $settlement->Order->Client->document_number }}">
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
-                                <label for="cliente_nombre" class="mb-0">Nombre o Razón Social Cliente:</label>
-                                <input type="text" class="form-control" id="cliente_nombre" placeholder="A.E.A. METALES Y SERVICIOS E.I.R.L. - AEAMES E.I.R.L" readonly value="{{ $settlement->Order->Client->name }}">
+                            <td colspan="5">
+                                <label class="mb-0">Nombre o Razón Social Cliente:</label>
+                                <input type="text" class="form-control" readonly value="{{ $settlement->Order->Client->name }}">
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <label for="concentrado" class="mb-0">Concentrado:</label>
-                                <input type="text" class="form-control" id="concentrado" placeholder="COBRE" readonly value="{{ $settlement->Order->Concentrate->concentrate }}">
+                                <input type="text" class="form-control" readonly value="{{ $settlement->Order->Concentrate->concentrate }}">
                             </td>
                             <td width="20px"></td>
                             <td>
                                 <label for="tmh" class="mb-0">TMH:</label>
-                                <input type="text" class="form-control" id="tmh" placeholder="9.740" readonly value="{{ floatval($settlement->Order->wmt) }}">
+                                <input type="text" class="form-control" readonly value="{{ floatval($settlement->Order->wmt) }}">
+                            </td>
+                            <td width="20px"></td>
+                            <td>
+                                <label for="tmh" class="mb-0">TMNS:</label>
+                                <input type="text" class="form-control" readonly value="{{ floatval($settlement->Law->tmns) }}">
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="5">
                                 <label for="procedencia" class="mb-0">Procedencia:</label>
-                                <input type="text" class="form-control" id="procedencia" placeholder="ALFA" readonly value="{{ $settlement->Order->origin }}">
+                                <input type="text" class="form-control" readonly value="{{ $settlement->Order->origin }}">
                             </td>
                         </tr>
                     </table>

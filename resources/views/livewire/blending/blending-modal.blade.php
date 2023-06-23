@@ -12,7 +12,7 @@
 
             </div>
             <div class="py-2 text-center" style="padding-left: 1rem; padding-right:1rem">
-                <x-label>Cantidad máxima:</x-label>
+                <x-label>TMH TOTAL PARA BLENDING:</x-label>
                 <x-input type="text" style="height:40px;width: 100%" class="text-center" wire:model="maximumWmt"/>
 
                 <x-input-error for="maximumWmt"/>
