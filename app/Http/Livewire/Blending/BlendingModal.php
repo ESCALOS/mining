@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Blending;
 
+use App\Exports\BlendingDraftExport;
 use App\Models\Dispatch;
 use App\Models\DispatchDetail;
 use App\Models\Settlement;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BlendingModal extends Component
 {
@@ -160,6 +163,17 @@ class BlendingModal extends Component
 
         return $fecha.'-'.$correlativo;
     }
+
+    public function export(){
+        $export = new BlendingDraftExport();
+        $fileName = 'Liquidaciones.xlsx';
+
+        return Response::streamDownload(function () use ($export) {
+            Excel::store($export, 'temp.xlsx');
+            readfile(storage_path('app/temp.xlsx'));
+        }, $fileName);
+    }
+
     public function render()
     {
         return view('livewire.blending.blending-modal');

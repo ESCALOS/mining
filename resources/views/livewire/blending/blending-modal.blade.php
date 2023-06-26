@@ -51,6 +51,9 @@
         </div>
         </x-slot>
         <x-slot name="footer">
+            <x-button wire:loading.attr="disabled" wire:click="export">
+                Exportar
+            </x-button>
             <x-button wire:loading.attr="disabled" wire:click="confirmBlending">
                 Guardar
             </x-button>
