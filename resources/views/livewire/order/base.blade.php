@@ -10,11 +10,9 @@
     </div>
     <div class="grid grid-cols-4">
         <div class="col-span-3 py-2" style="padding-left: 1rem; padding-right:1rem">
-            <x-label>Buscar:</x-label>
-            <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
+            <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Buscar orden"/>
         </div>
         <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-            <x-label>Estado:</x-label>
             <select class="form-select" style="width: 100%" wire:model='estado'>
                 <option value="">Todos</option>
                 <option value="1">Liquidados</option>

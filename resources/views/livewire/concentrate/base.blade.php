@@ -6,7 +6,7 @@
     </div>
 
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-        <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
+        <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Buscar concentrado"/>
     </div>
     @if ($concentrates->count())
     <table class="w-full overflow-x-scroll table-fixed" wire:loading.remove wire:target='getConcentrates'>

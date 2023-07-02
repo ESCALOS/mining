@@ -394,12 +394,13 @@
             </x-boton-crud>
             @endif
             <x-button class="ml-2" wire:loading.attr="disabled" wire:click="confirmSettle">
-                Guardar
+                <div wire:loading.remove>
+                    Guardar
+                </div>
+                <div wire:loading.flex>
+                    Cargando...
+                </div>
             </x-button>
-
-            <div wire:loading wire:target='confirmSettle'>
-                Registrando...
-            </div>
             <x-secondary-button wire:click="$set('open',false)" class="ml-2">
                 Cerrar
             </x-secondary-button>
@@ -615,17 +616,19 @@
                     </div>
                 </div>
             </div>
-            <div class="text-4xl text-center" wire:loading.flex>
-                Cargando...
+            <div class="p-4 text-2xl text-center" wire:loading.flex wire:target='settle'>
+                Actualizando registro...
             </div>
         </x-slot>
         <x-slot name="footer">
             <x-button class="ml-2" wire:loading.attr="disabled" wire:click="settle">
-                Liquidar
+                <div wire:loading.remove>
+                    Liquidar
+                </div>
+                <div wire:loading.flex>
+                    Cargando...
+                </div>
             </x-button>
-            <div wire:loading wire:target='settle'>
-                Registrando...
-            </div>
             <x-secondary-button wire:click="$set('open2',false)" class="ml-2">
                 Regresar
             </x-secondary-button>

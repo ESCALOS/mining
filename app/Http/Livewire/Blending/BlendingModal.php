@@ -130,9 +130,6 @@ class BlendingModal extends Component
                         'settlement_id' => $id,
                         'wmt' => $this->wmtToShip[$key]
                     ]);
-                    $settlement = Settlement::find($id);
-                    $settlement->wmt_shipped = $settlement->wmt_shipped + $this->wmtToShip[$key];
-                    $settlement->save();
                 }
                 $this->alert('success', '¡Blending Exitoso!', [
                     'position' => 'center',

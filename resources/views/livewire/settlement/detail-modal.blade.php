@@ -1,7 +1,7 @@
 <div>
     <x-dialog-modal wire:model='open' maxWidth="screen" >
         <x-slot name="title">
-            Detalle Liquidación - {{ $settlement != [] ? $settlement->batch : '' }}
+            Detalle de Liquidación - {{ $settlement != [] ? $settlement->batch : '' }}
         </x-slot>
         <x-slot name="content">
             @if ($settlement != [])
@@ -14,7 +14,7 @@
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Metal</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Leyes</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">%Pagable</th>
-                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Deduccion</th>
+                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Deducción</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Precio</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">US$/Tm</th>
                     </thead>
@@ -162,7 +162,7 @@
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">IGV</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Valor por Lote US$ + IGV</th>
                         <th style="border: 2px solid black;padding: 1rem;text-align: center">Detracción</th>
-                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Total de liquidacion</th>
+                        <th style="border: 2px solid black;padding: 1rem;text-align: center">Total de liquidación</th>
                     </thead>
                     <tbody>
                         <tr>

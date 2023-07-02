@@ -51,10 +51,8 @@
         </div>
         </x-slot>
         <x-slot name="footer">
-            <x-button wire:loading.attr="disabled" wire:click="export">
-                Exportar
-            </x-button>
-            <x-button wire:loading.attr="disabled" wire:click="confirmBlending">
+            <x-boton-crud accion="export" color="green" wire:loading.attr='disabled'>Exportar</x-boton-crud>
+            <x-button wire:loading.attr="disabled" class="ml-2" wire:click="confirmBlending">
                 Guardar
             </x-button>
             <div wire:loading wire:target='confirmBlending'>

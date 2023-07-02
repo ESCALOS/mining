@@ -99,7 +99,7 @@ class Modal extends Component
         $this->date = Carbon::now()->toDateString();
         if($id > 0){
             $order = Order::find($id);
-            $this->date = $order->date;
+            $this->date = Carbon::parse($order->date)->format('Y-m-d');
             $this->ticket = $order->ticket;
             $this->clientDocumentNumber = $order->Client->document_number;
             $this->clientName = $order->Client->name;

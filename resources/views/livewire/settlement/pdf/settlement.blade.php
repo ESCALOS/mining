@@ -53,14 +53,14 @@
                 <div>
                     <table style="width: 100%" align="center">
                         <tr>
-                            <td>
+                            <td width="49%">
                                 <label class="mb-0">Ticket:</label>
                                 <input type="text" class="form-control" readonly value="{{ $settlement->batch }}">
                             </td>
                             <td></td>
-                            <td width="20px"></td>
+                            <td width="1%"></td>
                             <td></td>
-                            <td>
+                            <td width="49%">
                                 <label class="mb-0">Nro. Documento:</label>
                                 <input type="text" class="form-control" readonly value="{{ $settlement->Order->Client->document_number }}">
                             </td>
@@ -76,15 +76,23 @@
                                 <label for="concentrado" class="mb-0">Concentrado:</label>
                                 <input type="text" class="form-control" readonly value="{{ $settlement->Order->Concentrate->concentrate }}">
                             </td>
-                            <td width="20px"></td>
+                            <td></td>
+                            <td width="10px"></td>
+                            <td></td>
                             <td>
-                                <label for="tmh" class="mb-0">TMH:</label>
-                                <input type="text" class="form-control" readonly value="{{ floatval($settlement->Order->wmt) }}">
-                            </td>
-                            <td width="20px"></td>
-                            <td>
-                                <label for="tmh" class="mb-0">TMNS:</label>
-                                <input type="text" class="form-control" readonly value="{{ floatval($settlement->Law->tmns) }}">
+                                <table style="width: 100%" class="text-center">
+                                    <tr>
+                                        <td style="width: 45%">
+                                            <label for="tmh" class="mb-0">TMH:</label>
+                                            <input type="text" class="form-control" readonly value="{{ floatval($settlement->Order->wmt) }}">
+                                        </td>
+                                        <td style="width: 5%"></td>
+                                        <td style="width: 45%">
+                                            <label for="tmh" class="mb-0">TMNS:</label>
+                                            <input type="text" class="form-control" readonly value="{{ floatval($settlement->Law->tmns) }}">
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr>

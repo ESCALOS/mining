@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Dispatch;
 
 use App\Models\Dispatch;
+use App\Models\DispatchDetail;
+use App\Models\Settlement;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -15,7 +18,7 @@ class Base extends Component
     public $dispatchId;
     public $search;
 
-    protected $listeners = ['confirmShip','ship'];
+    protected $listeners = ['confirmShip','ship','pullApart'];
 
     public function mount(){
         $this->dispatchId = 0;
@@ -27,7 +30,6 @@ class Base extends Component
         $this->alert('question','¿Estas seguro de enviar?',[
             'showConfirmButton' => true,
             'confirmButtonText' => 'Sí',
-            'onConfirmed' => 'confirmed',
             'position' => 'center',
             'toast' => false,
             'showCancelButton' => true,
@@ -47,6 +49,41 @@ class Base extends Component
             'timer' => 2000,
             'toast' => false,
         ]);
+    }
+
+    public function confirmPullApart($id){
+        $this->dispatchId = $id;
+        $this->alert('question','¿Estas seguro de deshacer la mezcla?',[
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Sí',
+            'position' => 'center',
+            'toast' => false,
+            'showCancelButton' => true,
+            'cancelButtonText' => 'No',
+            'timer' => 10000,
+            'onConfirmed' => 'pullApart',
+        ]);
+    }
+
+    public function pullApart(){
+        try{
+            DB::transaction(function(){
+                DispatchDetail::where('dispatch_id',$this->dispatchId)->delete();
+                Dispatch::find($this->dispatchId)->delete();
+                $this->alert('success', '¡Blending deshecho!', [
+                    'position' => 'center',
+                    'timer' => 2000,
+                    'toast' => true,
+                ]);
+            });
+        }catch(\Exception $e){
+            $this->alert('error', $e, [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => false,
+            ]);
+        }
+        $this->dispatchId = 0;
     }
 
     public function getDispatches(){

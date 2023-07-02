@@ -303,7 +303,7 @@ class SettleModal extends Component
     private function fillCamps($settlementId){
         if($settlementId > 0){
             $settlement = Settlement::find($settlementId);
-            $this->date = $settlement->date;
+            $this->date = $this->date = Carbon::parse($settlement->date)->format('Y-m-d');
             $this->batch = $settlement->batch;
             $this->withInvoice = $settlement->with_invoice;
             $this->internationalCopper = floatval($settlement->InternationalPayment->copper);
